@@ -1,5 +1,5 @@
 # exkanjiviz
-quick-and-dirty visualizer for font data from PC88 series level 1 Kanji ROM and PC-6007SR Kakuchou Kanji ROM&RAM cartridge / 拡張漢字ＲＡＭ＆ＲＯＭカートリッジ
+quick-and-dirty visualizer for font data from PC-8801mkIISR level 1 Kanji ROM, PC-6601-01 Kakuchou Kanji ROM cartridge / 拡張漢字ＲＯＭカートリッジ, and PC-6007SR Kakuchou Kanji ROM&RAM cartridge / 拡張漢字ＲＯＭ＆ＲＡＭカートリッジ
 
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
