@@ -23,4 +23,4 @@ ROM fingerprint information for the version dumped from my cartridge:
 
 ## Example of the Visualization
 Visualization of the contents of my PC-6007SR Kakuchou Kanji ROM & RAM Cartridge
-<img width="4352" height="816" alt="image" src="https://github.com/user-attachments/assets/483740eb-65ea-4c14-82cd-d18ba5c1811d" />
+<img width="4352" height="816" alt="[kanji visualization]" src="https://github.com/user-attachments/assets/2b8487bd-4525-483c-a981-6ba254e783f9" />
