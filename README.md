@@ -7,7 +7,7 @@ quick-and-dirty visualizer for font data from:
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
 2. run `python exkanjiviz.py EXKANJI.ROM exkanji.png`
-3. the creted `exkanji.png` will have a visualization of the ROM contents laid out according to JIS ordering, which is not quite the same as the storage order
+3. the created `exkanji.png` will have a visualization of the ROM contents laid out according to JIS ordering, which is not quite the same as the storage order
 
 ## ROM Data Extraction
 If you need to get the data from your actual PC-6007SR cartridge or synthesize it from other font data, see the [おまけ：拡張漢字ROM
