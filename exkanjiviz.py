@@ -122,7 +122,7 @@ def exkanjiviz(exkanji_rom, exkanji_png):
         + [None]
     )[-1]
     dr = ImageDraw.Draw(im)
-    puts_at(dr, " NEC PC-6007SR Kakuchou Kanji ROM ", 16 * 16 + 8, 4, w, k)
+    puts_at(dr, " NEC PC-6007SR/PC-6601-01 Kakuchou Kanji ROM, PC-8801 Level 1 Kanji ROM ", 16 * 16 + 8, 4, w, k)
     puts_at(dr, "\x1d halfwidth character sets (8x16 and 8x8)", 16 * 16 + 4, 24, k3, k)
     puts_at(
         dr,
@@ -225,7 +225,19 @@ def exkanjiviz(exkanji_rom, exkanji_png):
         putkuten_at(
             dr, [byt - 0xA0 for byt in ch.encode("EUC-JP")], (20 + i) * 16 + 4, 64, w, k
         )
-        for i, ch in enumerate("拡張漢字ＲＡＭ＆ＲＯＭカートリッジ")
+        for i, ch in enumerate("拡張漢字ＲＯＭ＆ＲＡＭカートリッジ")
+    ]
+    [
+        putkuten_at(
+            dr, [byt - 0xA0 for byt in ch.encode("EUC-JP")], (20 + i) * 16 + 4, 80, w, k
+        )
+        for i, ch in enumerate("拡張漢字ＲＯＭカートリッジ")
+    ]
+    [
+        putkuten_at(
+            dr, [byt - 0xA0 for byt in ch.encode("EUC-JP")], (20 + i) * 16 + 4, 96, w, k
+        )
+        for i, ch in enumerate("ＰＣ−８８０１")
     ]
     im.save(exkanji_png)
 
