@@ -65,7 +65,7 @@ def exkanjiviz(exkanji_rom, exkanji_png):
     b = open(exkanji_rom, "rb").read()
 
     b = bytes(
-        [b[(i & 1) * 128 * 32 + (i >> (2 if i & 1 else 1))] for i in range(256 * 32)]
+        b[(i & 1) * 128 * 32 + (i >> (2 if i & 1 else 1))] for i in range(256 * 32)
     ) + swiz(b[256 * 16 + 256 * 8 + 96 * 32 :])
     b = (
         b[: (256 + 32 * 21) * 32]
@@ -74,20 +74,18 @@ def exkanjiviz(exkanji_rom, exkanji_png):
         + b[(256 + 32 * 23) * 32 :]
     )
     xb = bytes(
-        [
-            (
-                (0x00)
-                if ((i & 3) == 3) and (i < 256 * 32)
-                else (
-                    0xFF
-                    if (i >= (256 + 32 * 21) * 32 and i < ((256 + 32 * 25) * 32))
-                    or ((i >= 256 * 32) and (((i - 256 * 32) // 32) % 96) in (0, 95))
-                    or (i >= (256 + 1 * 96 + 16) * 32 and i < (256 + 2 * 96) * 32)
-                    else 0x00
-                )
+        (
+            (0x00)
+            if ((i & 3) == 3) and (i < 256 * 32)
+            else (
+                0xFF
+                if (i >= (256 + 32 * 21) * 32 and i < ((256 + 32 * 25) * 32))
+                or ((i >= 256 * 32) and (((i - 256 * 32) // 32) % 96) in (0, 95))
+                or (i >= (256 + 1 * 96 + 16) * 32 and i < (256 + 2 * 96) * 32)
+                else 0x00
             )
-            for i in range(len(b))
-        ]
+        )
+        for i in range(len(b))
     )
 
     def cvtr(r):
@@ -141,92 +139,80 @@ def exkanjiviz(exkanji_rom, exkanji_png):
     def kuten_ch(kuten):
         return 256 + (kuten[0] - 1 - (6 if kuten[0] >= 16 else 0)) * 96 + kuten[1]
 
-    def putkuten_at(dr, kuten, x, y, fg, bg):
+    def putkuten_at(dr, kuten, coords, color_pair):
+        x, y = coords
+        fg, bg = color_pair
         for i in range(256):
             dr.point(
                 (x + i % 16, y + i // 16),
                 (fg if b[kuten_ch(kuten) * 32 + (i // 8)] & (0x80 >> (i % 8)) else bg),
             )
 
-    def putch_at(dr, ch, x, y, fg, bg):
-        return (
-            [
-                dr.point(
-                    (x + i % 8, y + i // 8),
-                    (
-                        fg
-                        if b[ord(ch) * 32 + 2 * (i // 8) + (1 if ord(ch) < 0x20 else 0)]
-                        & (0x80 >> (i % 8))
-                        else bg
-                    ),
-                )
-                for i in range(128)
-            ]
-            + [None]
-        )[-1]
+    def putch_at(dr, ch, coords, color_pair):
+        x, y = coords
+        fg, bg = color_pair
+        for i in range(128):
+            dr.point(
+                (x + i % 8, y + i // 8),
+                (
+                    fg
+                    if b[ord(ch) * 32 + 2 * (i // 8) + (1 if ord(ch) < 0x20 else 0)]
+                    & (0x80 >> (i % 8))
+                    else bg
+                ),
+            )
 
-    def puts_at(dr, s, x, y, fg, bg):
+    def puts_at(dr, s, coords, color_pair):
+        x, y = coords
         for i in range(len(s)):
-            putch_at(dr, s[i : i + 1], x + 8 * i, y, fg, bg)
+            putch_at(dr, s[i : i + 1], (x + 8 * i, y), color_pair)
 
     dr = ImageDraw.Draw(im)
     puts_at(
         dr,
         " NEC PC-6007SR/PC-6601-01 Kakuchou Kanji ROM, PC-8801 Level 1 Kanji ROM ",
-        16 * 16 + 8,
-        4,
-        w,
-        k,
+        (16 * 16 + 8, 4),
+        (w, k),
     )
-    puts_at(dr, "\x1d halfwidth character sets (8x16 and 8x8)", 16 * 16 + 4, 24, k3, k)
+    puts_at(
+        dr, "\x1d halfwidth character sets (8x16 and 8x8)", (16 * 16 + 4, 24), (k3, k)
+    )
     puts_at(
         dr,
         "\x1f (row number)",
-        (16 + 1) * 16 + 8,
-        (16 - (96 + z - 1) // z - 1) * 16 - 4,
-        w1,
-        k,
+        ((16 + 1) * 16 + 8, (16 - (96 + z - 1) // z - 1) * 16 - 4),
+        (w1, k),
     )
     puts_at(
         dr,
         "\x1f (unallocated code area)",
-        (32 + z + 4) * 16 + 8,
-        (16 - (96 + z - 1) // z - 1) * 16 - 4,
-        w2,
-        k,
+        ((32 + z + 4) * 16 + 8, (16 - (96 + z - 1) // z - 1) * 16 - 4),
+        (w2, k),
     )
     puts_at(
         dr,
         "\x1f (missing from old JIS)",
-        (17 * 7 + 2 + z) * 16 + 8,
-        (16 - (96 + z - 1) // z - 1) * 16 - 4,
-        w1,
-        k,
+        ((17 * 7 + 2 + z) * 16 + 8, (16 - (96 + z - 1) // z - 1) * 16 - 4),
+        (w1, k),
     )
     puts_at(
         dr,
         "fullwidth character set (old JIS with level 1 Kanji)",
-        16 * 16 + 8,
-        (16 - (96 + z - 1) // z - 2) * 16 - 4,
-        w,
-        k,
+        (16 * 16 + 8, (16 - (96 + z - 1) // z - 2) * 16 - 4),
+        (w, k),
     )
     for i in range(1, 95):
         puts_at(
             dr,
             "%02d" % i,
-            16 * (i % z + 3 * (z + 1) - z // 2),
-            24 + 16 * (i // z),
-            [w1, k][i % 2],
-            [k, w1][i % 2],
+            (16 * (i % z + 3 * (z + 1) - z // 2), 24 + 16 * (i // z)),
+            ([w1, k][i % 2], [k, w1][i % 2]),
         )
     puts_at(
         dr,
         "\x1d (column number key)",
-        -12 + 16 * (4 * (z + 1) - z // 2),
-        24 + 12,
-        w1,
-        k,
+        (-12 + 16 * (4 * (z + 1) - z // 2), 24 + 12),
+        (w1, k),
     )
 
     def chx(cc):
@@ -260,30 +246,35 @@ def exkanjiviz(exkanji_rom, exkanji_png):
         puts_at(
             dr,
             f"{i + (6 if i >= 10 else 0):02d}",
-            16 * chx(256 + 96 * (i - 1)),
-            16 * chy(256 + 96 * (i - 1)),
-            k,
-            w1,
+            (16 * chx(256 + 96 * (i - 1)), 16 * chy(256 + 96 * (i - 1))),
+            (k, w1),
         )
         puts_at(
             dr,
             f"{i + (6 if i >= 10 else 0):02d}",
-            16 * chx(256 + 96 * (i - 1) + 95),
-            16 * chy(256 + 96 * (i - 1) + 95),
-            k,
-            w1,
+            (16 * chx(256 + 96 * (i - 1) + 95), 16 * chy(256 + 96 * (i - 1) + 95)),
+            (k, w1),
         )
     for i, ch in enumerate("拡張漢字ＲＯＭ＆ＲＡＭカートリッジ"):
         putkuten_at(
-            dr, [byt - 0xA0 for byt in ch.encode("EUC-JP")], (20 + i) * 16 + 4, 64, w, k
+            dr,
+            [byt - 0xA0 for byt in ch.encode("EUC-JP")],
+            ((20 + i) * 16 + 4, 64),
+            (w, k),
         )
     for i, ch in enumerate("拡張漢字ＲＯＭカートリッジ"):
         putkuten_at(
-            dr, [byt - 0xA0 for byt in ch.encode("EUC-JP")], (20 + i) * 16 + 4, 80, w, k
+            dr,
+            [byt - 0xA0 for byt in ch.encode("EUC-JP")],
+            ((20 + i) * 16 + 4, 80),
+            (w, k),
         )
     for i, ch in enumerate("ＰＣ−８８０１"):
         putkuten_at(
-            dr, [byt - 0xA0 for byt in ch.encode("EUC-JP")], (20 + i) * 16 + 4, 96, w, k
+            dr,
+            [byt - 0xA0 for byt in ch.encode("EUC-JP")],
+            ((20 + i) * 16 + 4, 96),
+            (w, k),
         )
     im.save(exkanji_png)
 
