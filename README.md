@@ -35,6 +35,19 @@ ROM fingerprint information for the version dumped from my cartridge:
 ROM fingerprint information for the KANJIROM.62 / KANJIROM.66 created from this:
 - `32K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [KANJIROM subset].rom crc32:20c8f3eb md5:638ea8e59a73fa4d8c6a6153b500dab9 sha1:4c9f30f0a2ebbe70aa8e697f94eac74d8241cadd sha256:0f536e7c00ac9985cb39dfd3c54d20bbf1c477a3fcc00f1dfad207f3323b3373 size:32768`
 
+The 128 KiB Kakuchou Kanji ROM is actually stored in two separate 64KiB ROM IC's, with the left 8 pixels of each character in the first IC and the right 8 pixels in the second one, except for the half-width characters which are laid out differently. The on-board 32 KiB PC-6001mkII/PC-6601 Kanji ROM is apparently also stored in two separate 16 KiB ROM IC's, split in exactly the same way (except it doesn't have any halfwidth characters; for built-in text rendering those come from a separate onboard pair of 8KiB CGROM's which use a different layout - and may actually be concatenated and stored in a single 16KiB ROM IC.) So the EXTKANJI.ROM format accurately reflects a concatenation of the two individual ROM IC's, which are separately referred to as EXTKANJI1.ROM and EXTKANJI2.ROM. And EXKANJI.ROM/kanji1.rom instead interleaves them, which matches how they are used for font rendering as a virtual 64Ki x 16bit ROM - though in fact each 8 bit chunk is read out separately due to how the I/O port mapping works. The KANJIROM.62/.66 format is likewise a concatenation of the two parts, KANJIROM1.62/.66 and KANJIROM2.62/.66, each of which represents the contents of a physical ROM IC. There is not a corresponding interleaved 16Ki x 16bit format used by emulators AFAIK.
+
+ROM fingerprint information for each of the separated parts:
+```
+16K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [KANJIROM subset] [IC 1].rom crc32:a5c44f92 md5:1336e0c67fb47a795fc17594685aa66a sha1:1e4a354eb647e0a8f8a2dff2088fadfe113782d6 sha256:e2b2c8eced4c373c0d06578512484af7f7a1532f043aa47f1fb8802bdf75cc25 size:16384
+
+16K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [KANJIROM subset] [IC 2].rom crc32:cc055765 md5:d86d0f5569583946ca5f2ea1e0b751a7 sha1:ddbaf2538f5e123bfa96fda35623427fd6418c75 sha256:5ef4c158915201678aca1c70a8f95b9a65b4284c1c1f5abecc0b6cbd674f917c size:16384
+
+64K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [ksaver EXTKANJI format] [IC 1].rom crc32:85540f76 md5:b467872d5d5eb00fb45d7a420980fd42 sha1:4bef3de4771aae2654af00cb96cf3254a3822e44 sha256:dceb13fe4ef764c93dbc04db71cf8f4ce67ef14c09331fcca291be4c0361649f size:65536
+
+64K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [ksaver EXTKANJI format] [IC 2].rom crc32:1764a663 md5:3bd8bf8a43aaf6d44aae5f7dfe77036f sha1:54d082778f64bf4a929e98a3cc310f51e15a8767 sha256:6d91378addf91d9d6e4b520913548a7a80822fb74bc29ae866b3af97337a0bc1 size:65536
+```
+
 <img width="40%" alt="Front - [N60] 128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan)" src="https://github.com/user-attachments/assets/410fa46d-4063-4328-91a1-74a89bf85569" /><img width="40%" alt="Back - [N60] 128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan)" src="https://github.com/user-attachments/assets/29aa6621-edea-44e7-a241-475a20d6fa3f" />
 
 
