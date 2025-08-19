@@ -286,9 +286,19 @@ def exkanjiviz(exkanji_rom, exkanji_png):
             dr.point(
                 (chx(i // 256) * 16 + i % 16, chy(i // 256) * 16 + (i // 16) % 16),
                 (
-                    [[[k, h][i//256 in kanjirom_subset_chs], k3][i // 256 < 256], k1, k2, k1]
+                    [
+                        [[k, h][i // 256 in kanjirom_subset_chs], k3][i // 256 < 256],
+                        k1,
+                        k2,
+                        k1,
+                    ]
                     if (b[i // 8] & (128 >> (i % 8)))
-                    else [[[w, v][i//256 in kanjirom_subset_chs], w3][i // 256 < 256], [w1, w4][i // 256 < 256], w2, w1]
+                    else [
+                        [[w, v][i // 256 in kanjirom_subset_chs], w3][i // 256 < 256],
+                        [w1, w4][i // 256 < 256],
+                        w2,
+                        w1,
+                    ]
                 )[2 * invc(i // 256) + (xb[i // 8] != 0)],
             )
     for i in range(1, 48 - 6):
