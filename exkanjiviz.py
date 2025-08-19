@@ -26,7 +26,46 @@ ROM fingerprint information for the version dumped from my cartridge:
 
 from PIL import Image, ImageDraw
 
+import codecs
+import gzip
 import sys
+
+
+# The list of kuten codes used to extract the KANJIROM subset from
+# EXKANJIROM is stored as a compressed list of skips.
+
+
+def _decompress_kuten_data(compressed_kuten_data):
+    ku_then_ten_data = gzip.decompress(codecs.decode(compressed_kuten_data, "base64"))
+    ku_data, ten_data = (
+        ku_then_ten_data[: len(ku_then_ten_data) // 2],
+        ku_then_ten_data[len(ku_then_ten_data) // 2 :],
+    )
+    assert len(ku_data) == len(ten_data)
+    kuten_data = []
+    o = (0, None)
+    for i in range(len(ku_data)):
+        o = (
+            (o[0] + ku_data[i], ten_data[i])
+            if ku_data[i]
+            else (o[0], o[1] + ten_data[i] + 1)
+        )
+        kuten_data.append(o)
+    return kuten_data
+
+
+JIS_TO_KANJIROM6X_KUTEN_DATA = _decompress_kuten_data(
+    b"H4sIANj6o2gC/71T7W4bMQwTJVl2Lu1aoEDf/1FHytft17AgvS1BLoktix+i3+3PLzy19VAVvnX6"
+    b"8SpchPL3Qth1UM8cwQVl+C/McY2cp8k+nRj8s2jgulE9VPF7r2q+uAUcgTCHm94RYA3SgA8LZ/ng"
+    b"nhU37OYJrqW6zN0JrNWLZR5A8ie3o0J7bjxaLyCAddtpcV/8Dut/GGycJED8JLbp47spTwrgTn6v"
+    b"3gBa17J+hbt4kyeGEZSdtWqF6taRMSe6cLNPbpl7nR64ZDV1IwkIFRvQtfzqUbbVSyb5UwvurSOE"
+    b"J52EE6pTK5VQsCdtlIeJ1qCzlBXsJark42F9znHOYT9Hq469EhtSj7apraWpS2q0uMHNUpy3V+01"
+    b"IukKmwW2l4d3y2xN8kpAA1ltOKdJos2XT5ftOZQC+dRd39joR5P1pua/wsN0+GgpJ/wX5VSuRkqu"
+    b"vbmVGrf1qs8tB34eiPO7Sqhrb9DJOcjM1hccA6egnG7dNpGhoRDNg7Gzz917LaBzmaJcwVlJN1WN"
+    b"lmk5G5vORRtt+c6OHUDXMofuSxzQE2sZZbe4H0xhn2M1G0Pxky+FQ+HAnl9lbiOKlyH2sJWz0sh1"
+    b"bca5rwBFcI5MxqFq1tChicVOx9B1SJJaLXqAacSk0h771KjGCLnVN043pS8wV3v859UhxZk+FWKP"
+    b"vq+5OPRCzJCwn5XY2LIACAAA"
+)
 
 
 # NEC stored the kanji ROM in a different order than JIS, but derived
@@ -115,6 +154,8 @@ def exkanjiviz(exkanji_rom, exkanji_png):
     k = (0, 0, 0, 255)
     w = (255, 255, 255, 255)
     g = (127, 127, 127, 0)
+    h = (0, 0, 127, 255)
+    v = (255, 255, 204, 255)
     w1 = (255, 0, 255)
     k1 = (63, 0, 63)
     w2 = (255, 255, 0)
@@ -175,7 +216,13 @@ def exkanjiviz(exkanji_rom, exkanji_png):
         (w, k),
     )
     puts_at(
-        dr, "\x1d halfwidth character sets (8x16 and 8x8)", (16 * 16 + 4, 24), (k3, k)
+        dr,
+        " NEC PC-6001mkII/PC-6601 Kanji ROM (subset) ",
+        (16 * 16 + 8, 20),
+        (v, h),
+    )
+    puts_at(
+        dr, "\x1d halfwidth character sets (8x16 and 8x8)", (16 * 16 + 4, 40), (k3, k)
     )
     puts_at(
         dr,
@@ -232,14 +279,16 @@ def exkanjiviz(exkanji_rom, exkanji_png):
             + 16
         )
 
+    kanjirom_subset_chs = {kuten_ch(kuten) for kuten in JIS_TO_KANJIROM6X_KUTEN_DATA}
+
     for i in range(8 * len(b)):
         if not xb[i // 8] or (i // 256 < 256) or (cvtr(((i // 256) - 256) // 96) <= 87):
             dr.point(
                 (chx(i // 256) * 16 + i % 16, chy(i // 256) * 16 + (i // 16) % 16),
                 (
-                    [[k, k3][i // 256 < 256], k1, k2, k1]
+                    [[[k, h][i//256 in kanjirom_subset_chs], k3][i // 256 < 256], k1, k2, k1]
                     if (b[i // 8] & (128 >> (i % 8)))
-                    else [[w, w3][i // 256 < 256], [w1, w4][i // 256 < 256], w2, w1]
+                    else [[[w, v][i//256 in kanjirom_subset_chs], w3][i // 256 < 256], [w1, w4][i // 256 < 256], w2, w1]
                 )[2 * invc(i // 256) + (xb[i // 8] != 0)],
             )
     for i in range(1, 48 - 6):
@@ -259,22 +308,29 @@ def exkanjiviz(exkanji_rom, exkanji_png):
         putkuten_at(
             dr,
             [byt - 0xA0 for byt in ch.encode("EUC-JP")],
-            ((20 + i) * 16 + 4, 64),
+            ((18 + i) * 16 + 4, 56),
             (w, k),
         )
     for i, ch in enumerate("拡張漢字ＲＯＭカートリッジ"):
         putkuten_at(
             dr,
             [byt - 0xA0 for byt in ch.encode("EUC-JP")],
-            ((20 + i) * 16 + 4, 80),
+            ((18 + i) * 16 + 4, 72),
             (w, k),
         )
     for i, ch in enumerate("ＰＣ−８８０１"):
         putkuten_at(
             dr,
             [byt - 0xA0 for byt in ch.encode("EUC-JP")],
-            ((20 + i) * 16 + 4, 96),
+            ((18 + i) * 16 + 4, 88),
             (w, k),
+        )
+    for i, ch in enumerate("ＰＣ−６００１ｍｋＩＩとＰＣ−６６０１漢字ＲＯＭ"):
+        putkuten_at(
+            dr,
+            [byt - 0xA0 for byt in ch.encode("EUC-JP")],
+            ((18 + i) * 16 + 4, 104),
+            (v, h),
         )
     im.save(exkanji_png)
 
