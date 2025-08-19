@@ -8,6 +8,8 @@ quick-and-dirty visualizer for font data from:
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
 2. run `python exkanjiviz.py EXKANJI.ROM exkanji.png`
 3. the created `exkanji.png` will have a visualization of the ROM contents laid out according to JIS ordering, which is not quite the same as the storage order
+4. run `python exkanji2kanjirom.py EXKANJI.ROM kanjirom.62` (or ...`.66`)
+5. the created `kanjirom.62` (or ...`.66`) should work with PC-6001mkII and PC-6601 emulators
 
 ## ROM Data Extraction
 If you need to get the data from your actual PC-6007SR cartridge or synthesize it from other font data, see the [おまけ：拡張漢字ROM
@@ -19,7 +21,12 @@ ROM fingerprint information for the version dumped from my cartridge:
 
 - `128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [ksaver EXTKANJI format].rom crc32:7e53b7d8 md5:1268ac01f5b3c38ef2be22576e54a6b6 sha1:827aadd671347a05281a3863e20dd9f31bff5423 sha256:85f212271e79c5a727e81ec61a8cba6fdeff0123e07a1bfcec71b769d8d532dc size:131072`
 - `128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [saverkanji EXKANJI format].rom crc32:6178bd43 md5:d81c6d5d7ad1a4bbbd6ae22a01257603 sha1:82e11a177af6a5091dd67f50a2f4bafda84d6556 sha256:7608040cffb1951e5cc567abb63f75b5746777a1ba96196c1b75606b793bb4bb size:131072`
+
+ROM fingerprint information for the KANJIROM.62 / KANJIROM.66 created from this:
+- `32K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [KANJIROM subset].rom crc32:20c8f3eb md5:638ea8e59a73fa4d8c6a6153b500dab9 sha1:4c9f30f0a2ebbe70aa8e697f94eac74d8241cadd sha256:0f536e7c00ac9985cb39dfd3c54d20bbf1c477a3fcc00f1dfad207f3323b3373 size:32768`
+
 <img width="40%" alt="Front - [N60] 128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan)" src="https://github.com/user-attachments/assets/410fa46d-4063-4328-91a1-74a89bf85569" /><img width="40%" alt="Back - [N60] 128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan)" src="https://github.com/user-attachments/assets/29aa6621-edea-44e7-a241-475a20d6fa3f" />
+
 
 ## Example of the Visualization
 Visualization of the contents of my PC-6007SR Kakuchou Kanji ROM & RAM Cartridge
