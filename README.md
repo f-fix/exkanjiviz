@@ -4,6 +4,16 @@ quick-and-dirty visualizer for font data from:
 - PC-6601-01 Kakuchou Kanji ROM cartridge / 拡張漢字ＲＯＭカートリッジ in `saverkanji` EXKANJI.ROM format
 - PC-8801 series level 1 Kanji ROM `kanji1.rom`
 
+# ... and exkanji2kanjirom
+quick-and-dirty PC-6001mkII and PC-6601 Kanji ROM construction using font data from:
+- PC-6007SR Kakuchou Kanji ROM&RAM cartridge / 拡張漢字ＲＯＭ＆ＲＡＭカートリッジ in `saverkanji` EXKANJI.ROM format
+- PC-6601-01 Kakuchou Kanji ROM cartridge / 拡張漢字ＲＯＭカートリッジ in `saverkanji` EXKANJI.ROM format
+- PC-8801 series level 1 Kanji ROM `kanji1.rom`
+
+Using this script you can make a working PC-6001mkII / PC-6601 Kanji ROM from your Kakuchou Kanji ROM or PC-8801 Level 1 Kanji ROM. The PC-6001mkII and PC-6601 Kanji ROM contains a 1/8 subset of the Level 1 Kanji from PC-6007SR/PC-6601-01/PC-8801. Maybe we should call it Level 0.125 Kanji?
+
+The result has exactly the same contents as the PC-6001mkII `KANJIROM.62` or PC-6601 `KANJIROM.66`.
+
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
 2. run `python exkanjiviz.py EXKANJI.ROM exkanji.png`
