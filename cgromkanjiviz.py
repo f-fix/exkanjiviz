@@ -2,18 +2,21 @@
 
 """
 quick-and-dirty visualizer for font data from:
-- PC-6001 `CGROM.60`
+- PC-6001 `CGROM.60` or `CGROM.61`
 - PC-6001mkII `CGROM60.62`, `CGROM60m.62`, and `KANJIROM.62`
 - PC-6601 `CGROM60.66`, `CGROM66.66`, and `KANJIROM.66`
+
+It should work with data from SR models too, just adjust the filenames.
 
 ## Usage
 1. prepare your ROM images (either real ones, or synthesized ones) with the kanji ROM (if any) deinterleaved
 2. run it:
-     - PC-6001: `python cgromkanjiviz.py CGROM.60 cgrom.png`
+     - PC-6001: `python cgromkanjiviz.py CGROM.60 cgrom.png` (or `CGROM.61`)
      - PC-6001mkII: `python cgromkanjiviz.py CGROM60.62 CGROM60m.62 KANJIROM.62 cgromkanji.png`
          or: `python cgromkanjiviz.py CGROM60.62 CGROM60m.62 KANJIROM1.62 KANJIROM2.62 cgromkanji.png`
-     - PC-6001: `python cgromkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM.66 cgromkanji.png`
+     - PC-6601: `python cgromkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM.66 cgromkanji.png`
          or: `python cgromkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM1.66 KANJIROM2.66 cgromkanji.png`
+     - SR models: adjust the filenames
 3. the created `cgrom.png` or `cgromkanji.png` will have a visualization of the ROM contents with CGROM laid out in grids and the PC-6001mkII/PC-6601 Kanji ROM subset laid out according to JIS ordering, which is not the same as the storage order
 
 ## ROM Data Extraction
@@ -380,8 +383,9 @@ def kanjirom_to_jisrom(kanjirom):
                 jisrom += kanjirom[:32]
                 kanjirom = kanjirom[32:]
             else:
-                jisrom += b"\xFF" * 32
+                jisrom += b"\xff" * 32
     return jisrom
+
 
 def interleave(*, pages):
     """
@@ -389,41 +393,45 @@ def interleave(*, pages):
     """
     assert len(pages) > 1
     assert len({len(page) for page in pages}) == 1
-    return bytes(pages[i%len(pages)][i//len(pages)] for i in range(len(pages) * len(pages[0])))
+    return bytes(
+        pages[i % len(pages)][i // len(pages)]
+        for i in range(len(pages) * len(pages[0]))
+    )
+
 
 def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
     """Given an input file named by `cgromkanji_rom` containing Level 1 Kanji font ROM data in PC-8801 series `kanji1.rom` format a.k.a. PC-6007SR Kakuchou Kanji ROM & RAM Cartridge / PC-6601-01 Kakuchou Kakuchou ROM Cartridge `saverkanji` EXKANJI.ROM format, produce a visualization and save it as a PNG in the output file named by `exkanji_png`."""
     b = open(cgrom, "rb").read()
-    xb = (b"\0" * 12 + b"\xFF" * 4) * min(len(b) // 16, 256 + 64)
+    xb = (b"\0" * 12 + b"\xff" * 4) * min(len(b) // 16, 256 + 64)
     b += b"\0" * (512 * 16 - len(b))
-    xb += b"\xFF" * (512 * 16 - len(xb))
-    is_n60 = xb[16 * 256:16 * (1 + 256)] == b"\xFF" * 16
+    xb += b"\xff" * (512 * 16 - len(xb))
+    is_n60 = xb[16 * 256 : 16 * (1 + 256)] == b"\xff" * 16
     assert len(b) == 512 * 16
     if cgrom_m:
         b += open(cgrom_m, "rb").read()
-        xb += (b"\0" * 10 + b"\xFF" * 6) * ((len(b) - len(xb)) // 16)
+        xb += (b"\0" * 10 + b"\xff" * 6) * ((len(b) - len(xb)) // 16)
     b += b"\0" * (1024 * 16 - len(b))
-    xb += b"\xFF" * (len(b) - len(xb))
+    xb += b"\xff" * (len(b) - len(xb))
     assert len(b) == 1024 * 16
-    b = interleave(pages=[b[:512*16], b[512*16:]])
-    xb = interleave(pages=[xb[:512*16], xb[512*16:]])
+    b = interleave(pages=[b[: 512 * 16], b[512 * 16 :]])
+    xb = interleave(pages=[xb[: 512 * 16], xb[512 * 16 :]])
     k = b""
     if kanji_roms:
         pages = [open(kanji_rom, "rb").read() for kanji_rom in kanji_roms]
         if len(pages) == 1:
             assert len(pages[0]) % 2 == 0
-            pages = [pages[0][:len(pages[0])//2], pages[0][len(pages[0])//2:]]
+            pages = [pages[0][: len(pages[0]) // 2], pages[0][len(pages[0]) // 2 :]]
         k = interleave(pages=pages)
     xk = b"\0" * len(k)
     k = k + b"\0" * (32 * 1024 - len(k))
-    xk += b"\xFF" * (len(k) - len(xk))
+    xk += b"\xff" * (len(k) - len(xk))
     assert len(k) == 32 * 1024
     k = kanjirom_to_jisrom(k)
     xk = kanjirom_to_jisrom(xk)
     b += k
     xb += xk
     b += b"\0" * (128 * 1024 - len(b))
-    xb += b"\xFF" * (len(b) - len(xb))
+    xb += b"\xff" * (len(b) - len(xb))
 
     def cvtr(r):
         return 1 + r + 6 * (r > 8)
@@ -491,48 +499,55 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
         x, y = coords
         fg, bg = color_pair
         for i in range(128):
-            if xb[ord(ch) * 32 + (font & 1) + 256 * 32 * (font >> 1) + 2 * (i // 8)] & (0x80 >> (i % 8)):
+            if xb[ord(ch) * 32 + (font & 1) + 256 * 32 * (font >> 1) + 2 * (i // 8)] & (
+                0x80 >> (i % 8)
+            ):
                 continue
             for yo in range(scale):
-              dr.point(
-                (x + i % 8, y + scale * (i // 8) + yo),
-                (
-                    fg
-                    if b[ord(ch) * 32 + (font & 1) + 256 * 32 * (font >> 1) + 2 * (i // 8)]
+                dr.point(
+                    (x + i % 8, y + scale * (i // 8) + yo),
+                    (
+                        fg
+                        if b[
+                            ord(ch) * 32
+                            + (font & 1)
+                            + 256 * 32 * (font >> 1)
+                            + 2 * (i // 8)
+                        ]
                         & (0x80 >> (i % 8))
-                    else bg
-                ),
-              )
+                        else bg
+                    ),
+                )
 
     def puts_at(dr, s, coords, color_pair, font=0, scale=1):
         x, y = coords
         for i in range(len(s)):
-            ch = s[i:i+1]
+            ch = s[i : i + 1]
             ch_font = font
-            if ch == '\N{leftwards arrow}':
+            if ch == "\N{LEFTWARDS ARROW}":
                 if cgrom_m:
                     ch = chr(0x29)
                     ch_font = 3
                 else:
-                    ch = '<'
-            elif ch == '\N{downwards arrow}':
+                    ch = "<"
+            elif ch == "\N{DOWNWARDS ARROW}":
                 if cgrom_m:
-                    ch = chr(0x2b)
+                    ch = chr(0x2B)
                     ch_font = 3
                 else:
-                    ch = 'v'
-            elif ch == '\N{rightwards arrow}':
+                    ch = "v"
+            elif ch == "\N{RIGHTWARDS ARROW}":
                 if cgrom_m:
                     ch = chr(0x28)
                     ch_font = 3
                 else:
-                    ch = '>'
-            elif ch == '\N{upwards arrow}':
+                    ch = ">"
+            elif ch == "\N{UPWARDS ARROW}":
                 if cgrom_m:
-                    ch = chr(0x2a)
+                    ch = chr(0x2A)
                     ch_font = 3
                 else:
-                    ch = '^'
+                    ch = "^"
             putch_at(dr, ch, (x + 8 * scale * i, y), color_pair, ch_font, scale)
 
     dr = ImageDraw.Draw(im)
@@ -544,35 +559,49 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
             (v, h),
         )
     puts_at(
-        dr, "\N{leftwards arrow} PC-6001/PC-6601 8-bit character set (8x12)", (16 * 16 + 4, 20), (k3, k)
+        dr,
+        "\N{LEFTWARDS ARROW} PC-6001/PC-6601 8-bit character set (8x12)",
+        (16 * 16 + 4, 20),
+        (k3, k),
     )
     if not is_n60:
         puts_at(
-            dr, "PC-6001mkII/PC-6601 graphics (8x12) \N{rightwards arrow}", (16 * 235, 20), (k3, k)
+            dr,
+            "PC-6001mkII/PC-6601 graphics (8x12) \N{RIGHTWARDS ARROW}",
+            (16 * 235, 20),
+            (k3, k),
         )
     if cgrom_m:
         puts_at(
-            dr, "\N{leftwards arrow} PC-6001/PC-6601 8-bit character set (8x10)", (16 * 16 + 4, 40), (w, k), font=1
+            dr,
+            "\N{LEFTWARDS ARROW} PC-6001/PC-6601 8-bit character set (8x10)",
+            (16 * 16 + 4, 40),
+            (w, k),
+            font=1,
         )
         puts_at(
-            dr, "PC-6001mkII/PC-6601 graphics (8x10) \N{rightwards arrow}", (16 * 235, 40), (w, k), font=1
+            dr,
+            "PC-6001mkII/PC-6601 graphics (8x10) \N{RIGHTWARDS ARROW}",
+            (16 * 235, 40),
+            (w, k),
+            font=1,
         )
     if kanji_roms:
         puts_at(
             dr,
-            "\N{downwards arrow} (row number)",
+            "\N{DOWNWARDS ARROW} (row number)",
             ((16 + 1) * 16 + 8, (16 - (96 + z - 1) // z - 1) * 16 - 4),
             (w1, k),
         )
         puts_at(
             dr,
-            "\N{downwards arrow} (unallocated code area)",
+            "\N{DOWNWARDS ARROW} (unallocated code area)",
             ((32 + z + 4) * 16 + 8, (16 - (96 + z - 1) // z - 1) * 16 - 4),
             (w2, k),
         )
         puts_at(
             dr,
-            "\N{downwards arrow} (missing from old JIS)",
+            "\N{DOWNWARDS ARROW} (missing from old JIS)",
             ((17 * 7 + 2 + z) * 16 + 8, (16 - (96 + z - 1) // z - 1) * 16 - 4),
             (w1, k),
         )
@@ -591,7 +620,7 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
             )
         puts_at(
             dr,
-            "\N{leftwards arrow} (column number key)",
+            "\N{LEFTWARDS ARROW} (column number key)",
             (-12 + 16 * (4 * (z + 1) - z // 2), 24 + 12),
             (w1, k),
         )
@@ -616,19 +645,30 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
     kanjirom_subset_chs = {kuten_ch(kuten) for kuten in JIS_TO_KANJIROM6X_KUTEN_DATA}
 
     for i in range(8 * len(b)):
-        if not xb[i // 8] or kanji_roms and (i // 256 >= 512) and (cvtr(((i // 256) - 512) // 96) <= 87):
+        if (
+            not xb[i // 8]
+            or kanji_roms
+            and (i // 256 >= 512)
+            and (cvtr(((i // 256) - 512) // 96) <= 87)
+        ):
             dr.point(
                 (chx(i // 256) * 16 + i % 16, chy(i // 256) * 16 + (i // 16) % 16),
                 (
                     [
-                        [[k, h][i // 256 in kanjirom_subset_chs], [k3, w][1 if i & 8 else 0]][i // 256 < 512],
+                        [
+                            [k, h][i // 256 in kanjirom_subset_chs],
+                            [k3, w][1 if i & 8 else 0],
+                        ][i // 256 < 512],
                         k1,
                         k2,
                         k1,
                     ]
                     if (b[i // 8] & (128 >> (i % 8)))
                     else [
-                        [[w, v][i // 256 in kanjirom_subset_chs], [w3, k][1 if i & 8 else 0]][i // 256 < 512],
+                        [
+                            [w, v][i // 256 in kanjirom_subset_chs],
+                            [w3, k][1 if i & 8 else 0],
+                        ][i // 256 < 512],
                         [w1, [w4, g][1 if i & 8 else 0]][i // 256 < 512],
                         w2,
                         w1,
@@ -660,8 +700,8 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
                     (v, h),
                 )
             else:
-                if ch == '\N{minus sign}':
-                    ch = '-'
+                if ch == "\N{MINUS SIGN}":
+                    ch = "-"
                 ch = encode_pc6001_8bit_charset(ch)
                 puts_at(
                     dr,
@@ -671,7 +711,7 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
                     font=1,
                     scale=2,
                 )
-                xdeflect += 8 * len(ch) - 16 
+                xdeflect += 8 * len(ch) - 16
     im.save(cgromkanji_png)
 
 
@@ -688,7 +728,9 @@ def main():
                 _, cgrom, cgrom_m, kanji_rom, cgromkanji_png = sys.argv
                 kanji_roms = [kanji_rom]
             except:
-                _, cgrom, cgrom_m, kanji_rom1, kanji_rom2, cgromkanji_png = sys.argv  # usage: python cgromkanjiviz.py CGROM [ CGROMm [ KANJIROM or KANJIROM1 KANJIROM2 ] ] OUTPUT
+                _, cgrom, cgrom_m, kanji_rom1, kanji_rom2, cgromkanji_png = (
+                    sys.argv
+                )  # usage: python cgromkanjiviz.py CGROM [ CGROMm [ KANJIROM or KANJIROM1 KANJIROM2 ] ] OUTPUT
                 kanji_roms = [kanji_rom1, kanji_rom2]
     cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png)
 
