@@ -15,7 +15,7 @@ The result has exactly the same contents as the PC-6001mkII `KANJIROM.62` or PC-
 # ... and interleave
 produce interleaved output from deinterleaved inputs
 
-Using this script you can convert from EXTKANJI.ROM or EXTKANJI1.ROM + EXTKANJI2.ROM to EXKANJI.ROM interleaved format
+Using this script you can convert from concatenated `EXTKANJI.ROM` deinterleaved format or separated `EXTKANJI1.ROM` + `EXTKANJI2.ROM` deinterleaved format to `EXKANJI.ROM` interleaved format
 
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
