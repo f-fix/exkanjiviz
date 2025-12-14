@@ -12,7 +12,7 @@ quick-and-dirty PC-6001mkII and PC-6601 Kanji ROM construction using font data f
 Using this script you can make a working PC-6001mkII / PC-6601 Kanji ROM from your Kakuchou Kanji ROM or PC-8801 Level 1 Kanji ROM. The PC-6001mkII and PC-6601 Kanji ROM contains a 1/4 or so subset of the Level 1 Kanji from PC-6007SR/PC-6601-01/PC-8801.
 
 The result has exactly the same contents as the PC-6001mkII `KANJIROM.62` or PC-6601 `KANJIROM.66`.
-# ... and interleave
+# ... also interleave
 produce interleaved output from deinterleaved inputs
 
 Using this script you can convert from concatenated `EXTKANJI.ROM` deinterleaved format or separated `EXTKANJI1.ROM` + `EXTKANJI2.ROM` deinterleaved format to `EXKANJI.ROM` interleaved format
