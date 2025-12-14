@@ -16,6 +16,13 @@ The result has exactly the same contents as the PC-6001mkII `KANJIROM.62` or PC-
 produce interleaved output from deinterleaved inputs
 
 Using this script you can convert from concatenated `EXTKANJI.ROM` deinterleaved format or separated `EXTKANJI1.ROM` + `EXTKANJI2.ROM` deinterleaved format to `EXKANJI.ROM` interleaved format
+# ... also cgromkanjiviz
+quick-and-dirty visualizer for font data from:
+- PC-6001 `CGROM.60` or `CGROM.61`
+- PC-6001mkII/SR `CGROM60.62`, `CGROM60m.62`, and `KANJIROM.62`
+- PC-6601/SR `CGROM60.66`, `CGROM66.66`, and `KANJIROM.66`
+
+It should work with data from SR models too, just adjust the filenames.
 
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
@@ -25,9 +32,23 @@ Using this script you can convert from concatenated `EXTKANJI.ROM` deinterleaved
 3. the created `exkanji.png` will have a visualization of the ROM contents laid out according to JIS ordering, which is not quite the same as the storage order
 4. run `python exkanji2kanjirom.py EXKANJI.ROM kanjirom.62` (or ...`.66`)
 5. the created `kanjirom.62` (or ...`.66`) should work with PC-6001mkII and PC-6601 emulators
+
+For visualizing CGROM and KANJIROM:
+1. prepare your ROM images (either real ones, or synthesized ones) with the kanji ROM (if any) deinterleaved
+2. run it:
+     - PC-6001: `python cgromkanjiviz.py CGROM.60 cgrom.png` (or `CGROM.61`)
+     - PC-6001mkII: `python cgromkanjiviz.py CGROM60.62 CGROM60m.62 KANJIROM.62 cgromkanji.png`
+         or: `python cgromkanjiviz.py CGROM60.62 CGROM60m.62 KANJIROM1.62 KANJIROM2.62 cgromkanji.png`
+     - PC-6601: `python cgromkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM.66 cgromkanji.png`
+         or: `python cgromkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM1.66 KANJIROM2.66 cgromkanji.png`
+     - SR models: adjust the filenames
+3. the created `cgrom.png` or `cgromkanji.png` will have a visualization of the ROM contents with CGROM laid out in grids and the PC-6001mkII/PC-6601 Kanji ROM subset laid out according to JIS ordering, which is not the same as the storage order
 ## Visualization
 Visualization of the contents of my PC-6007SR Kakuchou Kanji ROM & RAM Cartridge
 <img width="4352" height="816" alt="Visualization -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/6f0b8159-5c19-490d-9a6f-b3857a521a26" />
+Visualization of the contents of my PC-6001mkII CGROM and Kanji ROM
+<img width="4352" height="816" alt="Visualization -  N60  PC-6001mkII CGROM and Kanji ROM (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/5e948a40-6358-416d-9736-af63e54685a7" />
+
 ## ROM Data Extraction
 If you need to get the data from your actual PC-6007SR cartridge or synthesize it from other font data, see the [おまけ：拡張漢字ROM
  section of the PC-6001mkII/6601用互換BASIC website](http://000.la.coocan.jp/p6/basic66.html#:~:text=%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%9F%E4%BE%8B-,%E3%81%8A%E3%81%BE%E3%81%91%EF%BC%9A%E6%8B%A1%E5%BC%B5%E6%BC%A2%E5%AD%97ROM,-%E3%82%A8%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%81%A7%E3%81%AE). That page also links to a utility program that can convert both directions between `ksaver` EXTKANJI.ROM format and `saverkanji` EXKANJI.ROM format. I saved mine from the cartridge using a PC-6001mkII with [ksaver](https://web.archive.org/web/20071223192215/http://www.kisweb.ne.jp/personal/windy/pc6001/p6soft.html#ksaver) in `EXTKANJI.ROM` concatenated deinterleaved format and then converted it to `EXKANJI.ROM` interleaved format using the converter `cnvextkanji` or `interleave.py`.
