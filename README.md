@@ -12,6 +12,18 @@ quick-and-dirty PC-6001mkII and PC-6601 Kanji ROM construction using font data f
 Using this script you can make a working PC-6001mkII / PC-6601 Kanji ROM from your Kakuchou Kanji ROM or PC-8801 Level 1 Kanji ROM. The PC-6001mkII and PC-6601 Kanji ROM contains a 1/4 or so subset of the Level 1 Kanji from PC-6007SR/PC-6601-01/PC-8801.
 
 The result has exactly the same contents as the PC-6001mkII `KANJIROM.62` or PC-6601 `KANJIROM.66`.
+
+BTW you can also extract the pc8001/pc8001mk2/pc8001mk2sr/pc8801 8x8-dot alphanumerics + katakana CGROM font from the Level 1 Kanji ROM:
+```bash
+dd bs=8 count=256 skip=512 if=EXKANJI.ROM of=fontkata.rom
+# OR
+dd bs=8 count=256 skip=512 if=kanji1.rom of=fontkata.rom
+```
+ROM fingerprint information for the PC-8001/PC-8801 CGROM subset:
+```
+2.0K fontkata.rom crc32:56653188 md5:cd428f9ee8ff9f84c60beb7a8a0ef628 sha1:84b90f69671d4b72e8f219e1fe7cd667e976cf7f sha256:3227087599afd9304f260cdeb3bf1533e39e425cf444ceb3c24f55f561e71a0c size:2048
+```
+Conventially the file is called `font.rom` by some tools and `fontkata.rom` by others. Rename it as needed.
 # ... also interleave
 produce interleaved output from deinterleaved inputs
 
