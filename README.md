@@ -23,7 +23,7 @@ ROM fingerprint information for the PC-8001/PC-8801 CGROM subset:
 ```
 2.0K fontkata.rom crc32:56653188 md5:cd428f9ee8ff9f84c60beb7a8a0ef628 sha1:84b90f69671d4b72e8f219e1fe7cd667e976cf7f sha256:3227087599afd9304f260cdeb3bf1533e39e425cf444ceb3c24f55f561e71a0c size:2048
 ```
-Conventially the file is called `font.rom` by some tools and `fontkata.rom` by others. Rename it as needed.
+Conventionally the file is called `font.rom` by some tools and `fontkata.rom` by others. Rename it as needed.
 # ... also interleave
 produce interleaved output from deinterleaved inputs
 
