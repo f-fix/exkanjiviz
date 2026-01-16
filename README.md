@@ -30,7 +30,7 @@ produce interleaved output from deinterleaved inputs
 Using this script you can convert from concatenated `EXTKANJI.ROM` deinterleaved format or separated `EXTKANJI1.ROM` + `EXTKANJI2.ROM` deinterleaved format to `EXKANJI.ROM` interleaved format
 # ... also cgromkanjiviz
 quick-and-dirty visualizer for font data from:
-- PC-6001 `CGROM.60` or `CGROM.61`
+- PC-6001 `CGROM.60` or `CGROM.61` + M5C6847P-1 internal font data
 - PC-6001mkII/SR `CGROM60.62`, `CGROM60m.62`, and `KANJIROM.62`
 - PC-6601/SR `CGROM60.66`, `CGROM66.66`, and `KANJIROM.66`
 
