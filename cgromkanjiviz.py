@@ -79,8 +79,8 @@ JIS_TO_KANJIROM6X_KUTEN_DATA = _decompress_kuten_data(
 )
 
 # M5C6847P-1 inherent character data
-# CG6: 2x3 mosaic tiles
-# CG4: 2x2 mosaic tiles
+# SG6: 2x3 mosaic tiles
+# SG4: 2x2 mosaic tiles
 # FONT: 64-character ASCII subset + inverted version
 
 
@@ -89,7 +89,7 @@ def _decompress_vdg_font(compressed_vdg_font):
     assert len(vdg_font) == 64 * 12
     vdg_font = vdg_font + bytes([i ^ 0xFF for i in vdg_font])
     vdg_font = b"".join(
-        vdg_font[12 * j : 12 * (j + 1)] + (16 - 12) * b"\0" for j in range(64 * 2)
+        vdg_font[12 * j : 12 * (j + 1)] + 4 * b"\0" for j in range(64 * 2)
     )
     return vdg_font
 
@@ -105,46 +105,19 @@ VDG_FONT = _decompress_vdg_font(
 
 SG6_PATTERNS = b"".join(
     [
-        bytes(
-            [
-                (0xF0 if (j & 0b100000) else 0x00) | (0x0F if (j & 0b010000) else 0x00),
-                (0xF0 if (j & 0b100000) else 0x00) | (0x0F if (j & 0b010000) else 0x00),
-                (0xF0 if (j & 0b100000) else 0x00) | (0x0F if (j & 0b010000) else 0x00),
-                (0xF0 if (j & 0b100000) else 0x00) | (0x0F if (j & 0b010000) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-            ]
-        )
-        + (16 - 12) * b"\0"
+        4 * bytes([(0xF0 if (j & 0b100000) else 0) | (0x0F if (j & 0b010000) else 0)])
+        + 4 * bytes([(0xF0 if (j & 0b001000) else 0) | (0x0F if (j & 0b000100) else 0)])
+        + 4 * bytes([(0xF0 if (j & 0b000010) else 0) | (0x0F if (j & 0b000001) else 0)])
+        + 4 * b"\0"
         for j in range(64)
     ]
 )
 
 SG4_PATTERNS = b"".join(
     [
-        bytes(
-            [
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b001000) else 0x00) | (0x0F if (j & 0b000100) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-                (0xF0 if (j & 0b000010) else 0x00) | (0x0F if (j & 0b000001) else 0x00),
-            ]
-        )
-        + (16 - 12) * b"\0"
+        6 * bytes([(0xF0 if (j & 0b001000) else 0) | (0x0F if (j & 0b000100) else 0)])
+        + 6 * bytes([(0xF0 if (j & 0b000010) else 0) | (0x0F if (j & 0b000001) else 0)])
+        + 4 * b"\0"
         for j in range(16)
     ]
 )
@@ -544,7 +517,7 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
         assert len(SG6_PATTERNS) == 64 * 16
         assert len(SG4_PATTERNS) == 16 * 16
         b = b[: 16 * 256] + SG6_PATTERNS + VDG_FONT + 4 * SG4_PATTERNS + b[16 * 512 :]
-        xb = xb[: 16 * 256] + 256 * (12 * b"\0" + (16 - 12) * b"\xff") + xb[16 * 512 :]
+        xb = xb[: 16 * 256] + 256 * (12 * b"\0" + 4 * b"\xff") + xb[16 * 512 :]
     assert len(b) == 512 * 16
     if cgrom_m:
         b += open(cgrom_m, "rb").read()
@@ -713,7 +686,7 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
     else:
         puts_at(
             dr,
-            "M5C6847P-1 CG6 2x3 (8x12) \N{RIGHTWARDS ARROW}",
+            "M5C6847P-1 SG6 2x3 (8x12) \N{RIGHTWARDS ARROW}",
             (16 * 235, 20),
             (k3, k),
         )
@@ -725,7 +698,7 @@ def cgromkanjiviz(cgrom, cgrom_m, kanji_roms, cgromkanji_png):
         )
         puts_at(
             dr,
-            "4x M5C6847P-1 CG4 2x2 (8x12) \N{RIGHTWARDS ARROW}",
+            "4x M5C6847P-1 SG4 2x2 (8x12) \N{RIGHTWARDS ARROW}",
             (16 * 235, 212),
             (k3, k),
         )
