@@ -258,18 +258,21 @@ done)
 ## Mitsubishi M5C6847P-1 and CGROM60.60 confirmation dump pictures
 Mitsubishi M5C6847P-1 in my NEC PC-6001
 <img width="759" height="455" alt="Mitsubishi M5C6847P-1 in my NEC PC-6001" src="https://github.com/user-attachments/assets/baa7f304-cdad-4763-a6c1-013290668208" />
+
 Dumping program output from PC-6001: (color NTSC composite version)
 <img width="808" height="455" alt="Dumping program output from PC-6001 (color NTSC composite version)" src="https://github.com/user-attachments/assets/fe676f0e-733c-490a-b3bb-2e4ca1c98ebd" />
-... instead interpreted as Y component
+
+... instead interpreted as Y component:
 <img width="1920" height="1080" alt="Dumping program output from PC-6001 (interpreted as Y component)" src="https://github.com/user-attachments/assets/72d9db32-12b2-459a-9984-db8d7ef64688" />
+
 ... and then rescaled, and made 1bpp monochrome:
 <img width="256" height="192" alt="Dumping program output from PC-6001 (interpreted as Y component, rescaled, and made 1bpp monochrome)" src="https://github.com/user-attachments/assets/358df46d-f2a8-4b7a-9f96-fe66f2d727af" />
+
 Dumping program output from PC-6001 mkII: (color NTSC composite version)
 <img width="808" height="455" alt="Dumping program output from PC-6001 mkII (color NTSC composite version)" src="https://github.com/user-attachments/assets/8f4be1fe-6f2e-4c96-a320-df8795430713" />
-... instead with mkII color switch turned off, and interpreted as Y component::
+
+... instead with mkII color switch turned off, and interpreted as Y component:
 <img width="1920" height="1080" alt="Dumping program output from PC-6001 mkII (mkII color switch turned off, interpreted as Y component)" src="https://github.com/user-attachments/assets/0883145b-0d75-4b1d-8adb-24dd05c49847" />
+
 ... and then rescaled, and made 1bpp monochrome:
 <img width="256" height="192" alt="Dumping program output from PC-6001 mkII (mkII color switch turned off, interpreted as Y component, rescaled, and made 1bpp monochrome)" src="https://github.com/user-attachments/assets/66a0773f-38e0-45d4-a80e-562bd50b4586" />
-
-
-
