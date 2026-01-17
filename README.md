@@ -84,7 +84,7 @@ ROM fingerprint information for each of the separated parts:
 - `64K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [ksaver EXTKANJI format] [IC 2].rom crc32:1764a663 md5:3bd8bf8a43aaf6d44aae5f7dfe77036f sha1:54d082778f64bf4a929e98a3cc310f51e15a8767 sha256:6d91378addf91d9d6e4b520913548a7a80822fb74bc29ae866b3af97337a0bc1 size:65536`
 
 If you need to get the built-in kanji ROM subset (KANJIROM) and/or single-byte character generator ROM (CGROM) from your actual PC-6001mkII or PC-6601, or want to construct an equivalent image for emulation or other purposes, see the [CGROM/KANJIROMファイルについて section of the PC-6001mkII/6601用互換BASIC website](https://000.la.coocan.jp/p6/basic66.html#cgrom). I used isio's [saver](http://retropc.net/isio/mysoft/#saver) to do this for my PC-6001mkII.
-## Photos
+## Photos of N60 PC-6007SR Kakuchou Kanji ROM/RAM Cartridge
 <img width="40%" alt="Front - [N60] 128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan)" src="https://github.com/user-attachments/assets/410fa46d-4063-4328-91a1-74a89bf85569" /><img width="40%" alt="Back - [N60] 128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan)" src="https://github.com/user-attachments/assets/29aa6621-edea-44e7-a241-475a20d6fa3f" />
 <img width="30%" alt="Interior View 1 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/5820b11b-4dc7-483e-80bc-61b550034469" /><img width="30%" alt="Interior View 2 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/e227bb76-232d-4a1b-ac05-1425b3f3782b" /><img width="30%" alt="Interior View 3 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/1a8392a2-d499-4341-8038-c2ec94f45d4e" />
 <img width="30%" alt="Interior View 4 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/a323a9a1-c315-483b-9ea9-a0c2395354c7" /><img width="30%" alt="Interior View 5 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/5eed7ff5-71dc-468d-b674-8d7abbb30825" /><img width="30%" alt="Interior View 6 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/8b53ad58-0ae6-4924-ad9a-3d7ff81abd4c" />
@@ -124,3 +124,44 @@ This subset of JIS Level 1 kanji is present in the PC-6001mkII / PC-6601 built-i
 4602 裏 …04 里 …06 陸 …07 律 …08 率 …09 立 …12 略 …14 流 …17 留 …25 旅 …30 両 …33 料 …41 良 …44 量 …46 領 …47 力 …48 緑 …51 林 …55 臨 …56 輪 …64 類 …65 令 …67 例 …68 冷 …73 礼 …82 歴 …83 列 …93 練
 4702 連 …09 路 …11 労 …15 朗 …23 老 …27 六 …31 録 …32 論 …34 和 …35 話
 ```
+## Bonus: Mitsubishi M5C6847P-1 inherent font data and CGROM60 dump visual confirmation
+*this is just a confirmation of existing dumps; note that MAME's Mitsubishi M5C6847P-1 emulation currently uses different and wrong font data*
+I used video capture to dump the inherent font data from the Mitsubishi M5C6847P-1 in my NEC PC-6001, and also - as a sanity check - to re-dump the CGROM60.60 from it which I had previously dumped by other means. I also dumped the same CGROM60.60 subset of the CGROM from my PC-6001 mkII by the same method (that model does not have an internal VDG font). I injected the string `D` `8` into the generated CGROM60.60 at locations 0x0FDC/0x0FDD (which is outside the drawn font data area) to exactly match the CGROM60.60 I have previously dumped via software from both machines. The result is both machines produced identical CGROM60.60 to previoous dumps, and also the VDG font from my PC-6001 is byte-for-byte identical to the [8x16 uninverted bitmaps as found in PC-6001VX](https://github.com/eighttails/PC6001VX/blob/2b927d5bcf229734eb35df472571ef863694b2d5/src/device/mc6847.cpp#L66). I also made a version of the VDG font in the 8x12 normal + inverted format used in MAME's emulation of other VDG models. This data does not match any of the ones currently in the MAME sources.
+Dumping program:
+```basic
+10 CONSOLE,,0
+20 CLS
+30 FOR I=0 TO 255
+31 A=&H02
+32 IF I>127 THEN A=A+&H40
+33 IFI>63ANDI<128THEN A=A+&H01
+40 POKE &HC000+I+I,&H23
+50 POKE &HC200+I+I,I
+60 POKE &HC000+I+I+1,A
+70 POKE &HC200+I+I+1,I
+80 NEXT
+90 IFINKEY$=""THENGOTO90
+100 CONSOLE,,1
+110 CLS
+```
+VDG inherent font fingerprint information, and CGROM60.60 dump confirmations:
+```
+4.0K m1p1cg-orange-mk2-mono-mono-cropped_cgrom60.60 crc32:b0142d32 md5:9153f89e83f94f5d1cfe0a4e75d03372 sha1:9570495b10af5b1785802681be94b0ea216a1e26 sha256:223024869cc4ad7a5d7949887fcc4ffbdad42e72cfb943edff50152c057e1b5d size:4096
+
+4.0K m1p1cg-orange-mono-cropped_cgrom60.60 crc32:b0142d32 md5:9153f89e83f94f5d1cfe0a4e75d03372 sha1:9570495b10af5b1785802681be94b0ea216a1e26 sha256:223024869cc4ad7a5d7949887fcc4ffbdad42e72cfb943edff50152c057e1b5d size:4096
+
+1.0K m1p1cg-orange-mono-cropped_vdgfont_1k.rom crc32:24c4f79c md5:e32a289f309cf844ababd6932c4f20d2 sha1:60f8e25f24fcf455d378afe4f2e51498787b7568 sha256:e5f4ed3301a266a148bcc3c7c8c06c380a5108bd7d56087c29f2567ff45b6cad size:1024
+
+1.5K m1p1cg-orange-mono-cropped_vdgfont_8x12.rom crc32:e2fb479c md5:520a524f46e8c99aa6fc3ccf7e557679 sha1:4c448a2d28fae35c0a64ae60e88dfc3a56ec7a4f sha256:bad33bb7e77549326317ae073d0d81db8da8c8567eea3848b1d36ee8b60a95fa size:1536
+```
+## Mitsubishi M5C6847P-1 and CGROM60.60 confirmation dump pictures
+<img width="759" height="455" alt="Mitsubishi M5C6847P-1 in my NEC PC-6001" src="https://github.com/user-attachments/assets/baa7f304-cdad-4763-a6c1-013290668208" />
+<img width="808" height="455" alt="Dumping program output from PC-6001 (color NTSC composite version)" src="https://github.com/user-attachments/assets/fe676f0e-733c-490a-b3bb-2e4ca1c98ebd" />
+<img width="1920" height="1080" alt="Dumping program output from PC-6001 (interpreted as Y component)" src="https://github.com/user-attachments/assets/72d9db32-12b2-459a-9984-db8d7ef64688" />
+<img width="256" height="192" alt="Dumping program output from PC-6001 (interpreted as Y component, rescaled, and made 1bpp monochrome)" src="https://github.com/user-attachments/assets/358df46d-f2a8-4b7a-9f96-fe66f2d727af" />
+<img width="808" height="455" alt="Dumping program output from PC-6001 mkII (color NTSC composite version)" src="https://github.com/user-attachments/assets/8f4be1fe-6f2e-4c96-a320-df8795430713" />
+<img width="1920" height="1080" alt="Dumping program output from PC-6001 mkII (mkII color switch turned off, interpreted as Y component)" src="https://github.com/user-attachments/assets/0883145b-0d75-4b1d-8adb-24dd05c49847" />
+<img width="256" height="192" alt="Dumping program output from PC-6001 mkII (mkII color switch turned off, interpreted as Y component, rescaled, and make 1bpp monochrome)" src="https://github.com/user-attachments/assets/66a0773f-38e0-45d4-a80e-562bd50b4586" />
+
+
+
