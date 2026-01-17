@@ -165,7 +165,7 @@ magick m1p1cg-orange-mk2-mono-mono.png  -colorspace gray +dither -colors 8 -type
 ```
 Once the video frames were converted to 256x192-px monochrome images, I extracted the font data like this:
 ```bash
-for captured_bitmap in m1p1cg-orange-mono-cropped.png m1p1cg-orange-mk2-mono-mono-cropped.png;
+(for captured_bitmap in m1p1cg-orange-mono-cropped.png m1p1cg-orange-mk2-mono-mono-cropped.png;
 do
     python3 -c 'import sys, os
 
@@ -253,7 +253,7 @@ vdgfont_8x12_filename = (
 print(f"creating {vdgfont_8x12_filename}")
 open(vdgfont_8x12_filename, "wb").write(vdgfont_8x12)
 ' "$captured_bitmap";
-done
+done)
 ```
 ## Mitsubishi M5C6847P-1 and CGROM60.60 confirmation dump pictures
 Mitsubishi M5C6847P-1 in my NEC PC-6001
