@@ -126,8 +126,10 @@ This subset of JIS Level 1 kanji is present in the PC-6001mkII / PC-6601 built-i
 ```
 ## Bonus: Mitsubishi M5C6847P-1 inherent font data and CGROM60 dump visual confirmation
 *this is just a confirmation of existing dumps; note that MAME's Mitsubishi M5C6847P-1 emulation currently uses different and wrong font data*
+
 I used video capture to dump the inherent font data from the Mitsubishi M5C6847P-1 in my NEC PC-6001, and also - as a sanity check - to re-dump the CGROM60.60 from it which I had previously dumped by other means. I also dumped the same CGROM60.60 subset of the CGROM from my PC-6001 mkII by the same method (that model does not have an internal VDG font). I injected the string `D` `8` into the generated CGROM60.60 at locations 0x0FDC/0x0FDD (which is outside the drawn font data area) to exactly match the CGROM60.60 I have previously dumped via software from both machines. The result is both machines produced identical CGROM60.60 to previoous dumps, and also the VDG font from my PC-6001 is byte-for-byte identical to the [8x16 uninverted bitmaps as found in PC-6001VX](https://github.com/eighttails/PC6001VX/blob/2b927d5bcf229734eb35df472571ef863694b2d5/src/device/mc6847.cpp#L66). I also made a version of the VDG font in the 8x12 normal + inverted format used in MAME's emulation of other VDG models. This data does not match any of the ones currently in the MAME sources.
-Dumping program:
+
+Dumping N60-BASIC program: (run with unexpanded 16KB RAM or in Mode 1 on later models; set Pages to 1)
 ```basic
 10 CONSOLE,,0
 20 CLS
