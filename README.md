@@ -60,6 +60,8 @@ Visualization of the contents of my PC-6007SR Kakuchou Kanji ROM & RAM Cartridge
 <img width="4352" height="816" alt="Visualization -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/6f0b8159-5c19-490d-9a6f-b3857a521a26" />
 Visualization of the contents of my PC-6001mkII CGROM and Kanji ROM
 <img width="4352" height="816" alt="Visualization -  N60  PC-6001mkII CGROM and Kanji ROM (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/5e948a40-6358-416d-9736-af63e54685a7" />
+Visualization of the contents of my PC-6001 CGROM with inherent character generation from its Mitsubishi M5C6847P-1 VDG
+<img width="4352" height="816" alt="Visualization -  N60  PC-6001 CGROM with inherent character generation from Mitsubishi M5C6847P-1 VDG" src="https://github.com/user-attachments/assets/245d03f2-06dd-43ad-a9d5-f3e3b13c9192" />
 
 ## ROM Data Extraction
 If you need to get the data from your actual PC-6007SR cartridge or synthesize it from other font data, see the [おまけ：拡張漢字ROM
