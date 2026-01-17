@@ -283,3 +283,7 @@ Dumping program output from PC-6001 mkII: (color NTSC composite version)
 ... and then rescaled, and made 1bpp monochrome:
 
 <img width="256" height="192" alt="Dumping program output from PC-6001 mkII (mkII color switch turned off, interpreted as Y component, rescaled, and made 1bpp monochrome)" src="https://github.com/user-attachments/assets/66a0773f-38e0-45d4-a80e-562bd50b4586" />
+
+## Mystery bytes in CGROM60.60
+The two mystery bytes in CGROM could be a date code: 0x44 could be month 4, week 4 and 0x38 could be Showa year 56, i.e. equivalent to the fourth week of April in 1981. It might also be a production lot indicator, with `D` meaning ceramic DIP and `8` being either a revision number or month + week code. I believe this is the CGROM IC, and I think it's a D2332C CerDIP 4096x8bit (32kbit) mask ROM, so I guess the `D`=CDIP theory is at least plausible.
+<img width="844" height="477" alt="image" src="https://github.com/user-attachments/assets/fbe05140-123c-4954-8b2a-da869657753e" /><img width="608" height="473" alt="image" src="https://github.com/user-attachments/assets/0b114f60-37cf-4fb8-8788-4c98d9294af0" />
