@@ -165,7 +165,95 @@ magick m1p1cg-orange-mk2-mono-mono.png  -colorspace gray +dither -colors 8 -type
 ```
 Once the video frames were converted to 256x192-px monochrome images, I extracted the font data like this:
 ```bash
-( for captured_bitmap in m1p1cg-orange-mono-cropped.png m1p1cg-orange-mk2-mono-mono-cropped.png ; do python3 -c 'import sys, os; _, capture_filename = sys.argv; from PIL import Image; img = Image.open(capture_filename).convert("RGBA"); assert img.size == (256, 192); cgrom = b"".join([b"".join([ b"".join([ bytes([ sum( (0x80 >> x) if img.getpixel( ( x + 16 * ( ch & 0x0F ) + 8 * charset, y + 12 * ( ch >> 4 ) ) )[0] < 128 else 0 for x in range(8) ) ^ (0xFF if charset else 0x00)  for y in range(12) ]) + (b"D8\0\0" if (charset, ch) == (0, 0xFD) else 4 * b"\0") ]) for ch in range(256) ]) for charset in range(2)]); vdgfont_1k = bytes([x ^ (0xFF if (i & 0x0F) < 12 else 0x00) for i, x in enumerate(cgrom[(256+64)*16:][:32*16])]) + cgrom[(256+32)*16:][:32*16]; vdgfont_8x12_normal = b"".join([vdgfont_1k[i:12+i] for i in range(0, len(vdgfont_1k), 16)]); vdgfont_8x12 = vdgfont_8x12_normal + bytes([ x ^ 0xFF for x in vdgfont_8x12_normal ]); cgrom60_filename = os.path.splitext(os.path.basename(capture_filename))[0] + "_cgrom60.60"; [print(f"removing existing {cgrom60_filename}")] if os.path.exists(cgrom60_filename) else None;print(f"creating {cgrom60_filename}");open(cgrom60_filename, "wb").write(cgrom[:16*256]); vdgfont_1k_filename =  os.path.splitext(os.path.basename(capture_filename))[0] + "_vdgfont_1k.rom"; [print(f"removing existing {vdgfont_1k_filename}")] if os.path.exists(vdgfont_1k_filename) else None;print(f"creating {vdgfont_1k_filename}");open(vdgfont_1k_filename, "wb").write(vdgfont_1k); vdgfont_8x12_filename =  os.path.splitext(os.path.basename(capture_filename))[0] + "_vdgfont_8x12.rom"; [print(f"removing existing {vdgfont_8x12_filename}")] if os.path.exists(vdgfont_8x12_filename) else None;print(f"creating {vdgfont_8x12_filename}");open(vdgfont_8x12_filename, "wb").write(vdgfont_8x12);' "$captured_bitmap"; done)
+for captured_bitmap in m1p1cg-orange-mono-cropped.png m1p1cg-orange-mk2-mono-mono-cropped.png;
+do
+    python3 -c 'import sys, os
+
+_, capture_filename = sys.argv
+from PIL import Image
+
+img = Image.open(capture_filename).convert("RGBA")
+assert img.size == (256, 192)
+cgrom = b"".join(
+    [
+        b"".join(
+            [
+                b"".join(
+                    [
+                        bytes(
+                            [
+                                sum(
+                                    (
+                                        (0x80 >> x)
+                                        if img.getpixel(
+                                            (
+                                                x + 16 * (ch & 0x0F) + 8 * charset,
+                                                y + 12 * (ch >> 4),
+                                            )
+                                        )[0]
+                                        < 128
+                                        else 0
+                                    )
+                                    for x in range(8)
+                                )
+                                ^ (0xFF if charset else 0x00)
+                                for y in range(12)
+                            ]
+                        )
+                        + (b"D8\0\0" if (charset, ch) == (0, 0xFD) else 4 * b"\0")
+                    ]
+                )
+                for ch in range(256)
+            ]
+        )
+        for charset in range(2)
+    ]
+)
+vdgfont_1k = (
+    bytes(
+        [
+            x ^ (0xFF if (i & 0x0F) < 12 else 0x00)
+            for i, x in enumerate(cgrom[(256 + 64) * 16 :][: 32 * 16])
+        ]
+    )
+    + cgrom[(256 + 32) * 16 :][: 32 * 16]
+)
+vdgfont_8x12_normal = b"".join(
+    [vdgfont_1k[i : 12 + i] for i in range(0, len(vdgfont_1k), 16)]
+)
+vdgfont_8x12 = vdgfont_8x12_normal + bytes([x ^ 0xFF for x in vdgfont_8x12_normal])
+cgrom60_filename = (
+    os.path.splitext(os.path.basename(capture_filename))[0] + "_cgrom60.60"
+)
+(
+    [print(f"removing existing {cgrom60_filename}")]
+    if os.path.exists(cgrom60_filename)
+    else None
+)
+print(f"creating {cgrom60_filename}")
+open(cgrom60_filename, "wb").write(cgrom[: 16 * 256])
+vdgfont_1k_filename = (
+    os.path.splitext(os.path.basename(capture_filename))[0] + "_vdgfont_1k.rom"
+)
+(
+    [print(f"removing existing {vdgfont_1k_filename}")]
+    if os.path.exists(vdgfont_1k_filename)
+    else None
+)
+print(f"creating {vdgfont_1k_filename}")
+open(vdgfont_1k_filename, "wb").write(vdgfont_1k)
+vdgfont_8x12_filename = (
+    os.path.splitext(os.path.basename(capture_filename))[0] + "_vdgfont_8x12.rom"
+)
+(
+    [print(f"removing existing {vdgfont_8x12_filename}")]
+    if os.path.exists(vdgfont_8x12_filename)
+    else None
+)
+print(f"creating {vdgfont_8x12_filename}")
+open(vdgfont_8x12_filename, "wb").write(vdgfont_8x12)
+' "$captured_bitmap";
+done
 ```
 ## Mitsubishi M5C6847P-1 and CGROM60.60 confirmation dump pictures
 Mitsubishi M5C6847P-1 in my NEC PC-6001
