@@ -158,14 +158,30 @@ VDG inherent font fingerprint information, and CGROM60.60 dump confirmations:
 
 1.5K m1p1cg-orange-mono-cropped_vdgfont_8x12.rom crc32:e2fb479c md5:520a524f46e8c99aa6fc3ccf7e557679 sha1:4c448a2d28fae35c0a64ae60e88dfc3a56ec7a4f sha256:bad33bb7e77549326317ae073d0d81db8da8c8567eea3848b1d36ee8b60a95fa size:1536
 ```
+Conversion from raw video captures to clean 256x192-px monochrome images depends very much on the specifics of the captured video. For my specific images this recipe worked:
+```bash
+magick m1p1cg-orange-mono.png  -crop 1920x$((980-115))+0+$((115-9)) -colorspace gray +dither -colors 8 -type bilevel -trim +repage -size 256x192 -interpolative-resize 256x192\! -interpolate nearest-neighbor +dither -colors 2 m1p1cg-orange-mono-cropped.png
+magick m1p1cg-orange-mk2-mono-mono.png  -colorspace gray +dither -colors 8 -type bilevel -trim +repage -size 256x192 -interpolative-resize 256x192\! -interpolate nearest-neighbor +dither -colors 2 m1p1cg-orange-mk2-mono-mono-cropped.png
+```
+Once the video frames were converted to 256x192-px monochrome images, I extracted the font data like this:
+```bash
+( for captured_bitmap in m1p1cg-orange-mono-cropped.png m1p1cg-orange-mk2-mono-mono-cropped.png ; do python3 -c 'import sys, os; _, capture_filename = sys.argv; from PIL import Image; img = Image.open(capture_filename).convert("RGBA"); assert img.size == (256, 192); cgrom = b"".join([b"".join([ b"".join([ bytes([ sum( (0x80 >> x) if img.getpixel( ( x + 16 * ( ch & 0x0F ) + 8 * charset, y + 12 * ( ch >> 4 ) ) )[0] < 128 else 0 for x in range(8) ) ^ (0xFF if charset else 0x00)  for y in range(12) ]) + (b"D8\0\0" if (charset, ch) == (0, 0xFD) else 4 * b"\0") ]) for ch in range(256) ]) for charset in range(2)]); vdgfont_1k = bytes([x ^ (0xFF if (i & 0x0F) < 12 else 0x00) for i, x in enumerate(cgrom[(256+64)*16:][:32*16])]) + cgrom[(256+32)*16:][:32*16]; vdgfont_8x12_normal = b"".join([vdgfont_1k[i:12+i] for i in range(0, len(vdgfont_1k), 16)]); vdgfont_8x12 = vdgfont_8x12_normal + bytes([ x ^ 0xFF for x in vdgfont_8x12_normal ]); cgrom60_filename = os.path.splitext(os.path.basename(capture_filename))[0] + "_cgrom60.60"; [print(f"removing existing {cgrom60_filename}")] if os.path.exists(cgrom60_filename) else None;print(f"creating {cgrom60_filename}");open(cgrom60_filename, "wb").write(cgrom[:16*256]); vdgfont_1k_filename =  os.path.splitext(os.path.basename(capture_filename))[0] + "_vdgfont_1k.rom"; [print(f"removing existing {vdgfont_1k_filename}")] if os.path.exists(vdgfont_1k_filename) else None;print(f"creating {vdgfont_1k_filename}");open(vdgfont_1k_filename, "wb").write(vdgfont_1k); vdgfont_8x12_filename =  os.path.splitext(os.path.basename(capture_filename))[0] + "_vdgfont_8x12.rom"; [print(f"removing existing {vdgfont_8x12_filename}")] if os.path.exists(vdgfont_8x12_filename) else None;print(f"creating {vdgfont_8x12_filename}");open(vdgfont_8x12_filename, "wb").write(vdgfont_8x12);' "$captured_bitmap"; done)
+```
 ## Mitsubishi M5C6847P-1 and CGROM60.60 confirmation dump pictures
+Mitsubishi M5C6847P-1 in my NEC PC-6001
 <img width="759" height="455" alt="Mitsubishi M5C6847P-1 in my NEC PC-6001" src="https://github.com/user-attachments/assets/baa7f304-cdad-4763-a6c1-013290668208" />
+Dumping program output from PC-6001: (color NTSC composite version)
 <img width="808" height="455" alt="Dumping program output from PC-6001 (color NTSC composite version)" src="https://github.com/user-attachments/assets/fe676f0e-733c-490a-b3bb-2e4ca1c98ebd" />
+... instead interpreted as Y component
 <img width="1920" height="1080" alt="Dumping program output from PC-6001 (interpreted as Y component)" src="https://github.com/user-attachments/assets/72d9db32-12b2-459a-9984-db8d7ef64688" />
+... and then rescaled, and made 1bpp monochrome:
 <img width="256" height="192" alt="Dumping program output from PC-6001 (interpreted as Y component, rescaled, and made 1bpp monochrome)" src="https://github.com/user-attachments/assets/358df46d-f2a8-4b7a-9f96-fe66f2d727af" />
+Dumping program output from PC-6001 mkII: (color NTSC composite version)
 <img width="808" height="455" alt="Dumping program output from PC-6001 mkII (color NTSC composite version)" src="https://github.com/user-attachments/assets/8f4be1fe-6f2e-4c96-a320-df8795430713" />
+... instead with mkII color switch turned off, and interpreted as Y component::
 <img width="1920" height="1080" alt="Dumping program output from PC-6001 mkII (mkII color switch turned off, interpreted as Y component)" src="https://github.com/user-attachments/assets/0883145b-0d75-4b1d-8adb-24dd05c49847" />
-<img width="256" height="192" alt="Dumping program output from PC-6001 mkII (mkII color switch turned off, interpreted as Y component, rescaled, and make 1bpp monochrome)" src="https://github.com/user-attachments/assets/66a0773f-38e0-45d4-a80e-562bd50b4586" />
+... and then rescaled, and made 1bpp monochrome:
+<img width="256" height="192" alt="Dumping program output from PC-6001 mkII (mkII color switch turned off, interpreted as Y component, rescaled, and made 1bpp monochrome)" src="https://github.com/user-attachments/assets/66a0773f-38e0-45d4-a80e-562bd50b4586" />
 
 
 
