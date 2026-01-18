@@ -167,7 +167,10 @@ Once the video frames were converted to 256x192-px monochrome images, I extracte
 ```bash
 (for captured_bitmap in m1p1cg-orange-mono-cropped.png m1p1cg-orange-mk2-mono-mono-cropped.png;
 do
-    python3 -c 'import sys, os
+    python3 -c '
+```
+```python
+import sys, os
 
 _, capture_filename = sys.argv
 from PIL import Image
@@ -252,6 +255,8 @@ vdgfont_8x12_filename = (
 )
 print(f"creating {vdgfont_8x12_filename}")
 open(vdgfont_8x12_filename, "wb").write(vdgfont_8x12)
+```
+```bash
 ' "$captured_bitmap";
 done)
 ```
