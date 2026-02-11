@@ -354,4 +354,5 @@ Again, but treating video signal as Y component:
 Listing the full version of the dumping program, along with the RT5X settings (it's running FW 3.71):
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a20f51fd-764e-43be-a6bb-d7591af152c2" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/02fd0133-110c-4f5c-9829-9d78c778d8d7" />
-<img width="304" height="140" alt="image" src="https://github.com/user-attachments/assets/d7c8c8b5-cbf6-4d2f-a982-01a9dae60b00" />
+<img width="519" height="237" alt="image" src="https://github.com/user-attachments/assets/1caf7699-2ffc-4204-bb58-8dc591932a42" />
+
