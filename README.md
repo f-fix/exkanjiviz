@@ -44,7 +44,7 @@ This PC-6601 Nihongo Word Processor disk contains YUKARAJJ Version 1.1 by Tokai 
 ```
 160K "YUKARAJJ Version 1.1 (Tokai Create) (Japan) (NEC PC-6601).dsk" crc32:0aaad58e md5:96d26cf34d52c7974722853be4ebc46c sha1:bd0f10239208f2c0373246a83ff20b2d49ac4fd6 sha256:424c4e758514cf19d4c3739c6a8c1a3f20d96785a0b3e070e0dfc501e4725f5a size:163840
 ```
-
+ 
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
     - if you have `EXTKANJI.ROM` concatenated deinterleaved format, run `python interleave.py -o EXKANJI.ROM EXTKANJI.ROM`
@@ -83,6 +83,8 @@ Visualization of the contents of my PC-6001 CGROM with inherent character genera
 <img width="4352" height="816" alt="Visualization -  N60  PC-6001 CGROM with inherent character generation from Mitsubishi M5C6847P-1 VDG" src="https://github.com/user-attachments/assets/245d03f2-06dd-43ad-a9d5-f3e3b13c9192" />
 Visualization of the combined character data from the PC-6001mkII CGROM and Kanji ROM with additional character data from the PC-6601 Nihongo Word Processor
 <img width="4352" height="816" alt="nwpkanji" src="https://github.com/user-attachments/assets/a13c2a37-90f7-49a5-b9cf-e1f1172a91db" />
+There are four characters found both in the Nihongo Word Processor and in the Kakuchou Kanji ROM but with pixel differences: 01/86 `＊`, 24/79 `醐`,  29/25 `醜`, and 43/03 `烹`
+<img width="4352" height="816" alt="ac" src="https://github.com/user-attachments/assets/7f020387-06c4-45d6-97d6-615d794d6e58" />
 
 
 ## ROM Data Extraction
