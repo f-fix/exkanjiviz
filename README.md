@@ -40,7 +40,7 @@ quick-and-dirty visualizer for font data from:
 - PC-6001mkII/SR `CGROM60.62` (not currently displayed), `CGROM60m.62`, `KANJIROM.62`, and PC-6601 Nihongo Word Processor disk
 - PC-6601/SR `CGROM60.66` (not currently displayed), `CGROM66.66`, `KANJIROM.66`, and PC-6601 Nihongo Word Processor disk
 
-This PC-6601 Nihongo Word Processor disk contains YUKARAJJ Version 1.1 by Tokai Create. Together, these sources provide all of the JIS level 1 kanji and special characters from the extended Kanji ROM, except for missing the halfwidth 8x16 characters and the Greek and Cyrillic characters. It should work with ROM data from SR models too, just adjust the filenames. The only word processor disk image tested so far is a 1D image in raw sector data format and has this fingerprint information:
+This PC-6601 Nihongo Word Processor disk contains `YUKARAJJ`/`ユーカラJJ` Version 1.1 by Tokai Create, predecessor of today's [Creo](https://www.creo.co.jp/english/about-creo/history/). Together, these sources provide all of the JIS level 1 kanji and special characters from the extended Kanji ROM, except for missing the halfwidth 8x16 characters and the Greek and Cyrillic characters. It should work with ROM data from SR models too, just adjust the filenames. The only word processor disk image tested so far is a 1D image in raw sector data format and has this fingerprint information:
 ```
 160K "YUKARAJJ Version 1.1 (Tokai Create) (Japan) (NEC PC-6601).dsk" crc32:0aaad58e md5:96d26cf34d52c7974722853be4ebc46c sha1:bd0f10239208f2c0373246a83ff20b2d49ac4fd6 sha256:424c4e758514cf19d4c3739c6a8c1a3f20d96785a0b3e070e0dfc501e4725f5a size:163840
 ```
