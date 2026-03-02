@@ -35,6 +35,15 @@ quick-and-dirty visualizer for font data from:
 - PC-6601/SR `CGROM60.66`, `CGROM66.66`, and `KANJIROM.66`
 
 It should work with data from SR models too, just adjust the filenames.
+# ... also nwpkanjiviz
+quick-and-dirty visualizer for font data from:
+- PC-6001mkII/SR `CGROM60.62` (not currently displayed), `CGROM60m.62`, `KANJIROM.62`, and PC-6601 Nihongo Word Processor disk
+- PC-6601/SR `CGROM60.66` (not currently displayed), `CGROM66.66`, `KANJIROM.66`, amd PC-6601 Nihongo Word Processor disk
+
+Together, these sources provide all of the JIS level 1 kanji and special characters from the extended Kanji ROM, except for missing the halfwidth 8x16 characters and the Greek and Cyrillic characters. It should work with ROM data from SR models too, just adjust the filenames. The only word processor disk image tested so far is a 1D image in raw sector data format and has this fingerprint information:
+```
+160K nwp.dsk crc32:0aaad58e md5:96d26cf34d52c7974722853be4ebc46c sha1:bd0f10239208f2c0373246a83ff20b2d49ac4fd6 sha256:424c4e758514cf19d4c3739c6a8c1a3f20d96785a0b3e070e0dfc501e4725f5a size:163840
+```
 
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
@@ -55,6 +64,16 @@ For visualizing CGROM and KANJIROM:
          or: `python cgromkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM1.66 KANJIROM2.66 cgromkanji.png`
      - SR models: adjust the filenames
 3. the created `cgrom.png` or `cgromkanji.png` will have a visualization of the ROM contents with CGROM laid out in grids and the PC-6001mkII/PC-6601 Kanji ROM subset laid out according to JIS ordering, which is not the same as the storage order
+
+For visualizing with the PC-6601 Nihongo Word Processor's added character data:
+1. prepare your ROM images (either real ones or synthesized ones) with the kanji ROM deinterleaved
+2. prepare your DSK image ([HxCFE tools](https://github.com/jfdelnero/HxCFloppyEmulator) can be ued to convert from other formats such as D88)
+3. run it:
+     - PC-6001mkII: `python nwpkanjiviz.py CGROM60.62 CGROM60m.62 KANJIROM.62 nwp.dsk nwpkanji.png`
+     - PC-6601: `python nwpkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM.66 nwp.dsk nwpkanji.png`
+     - SR models: adjust the filenames
+4. the created `nwpkanji.png` will have a visualization of the character data, excluding the N60-mode character data, laid out according to JIS ordering, which is not the same as the storage order
+
 ## Visualization
 Visualization of the contents of my PC-6007SR Kakuchou Kanji ROM & RAM Cartridge
 <img width="4352" height="816" alt="Visualization -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/6f0b8159-5c19-490d-9a6f-b3857a521a26" />
@@ -62,6 +81,9 @@ Visualization of the contents of my PC-6001mkII CGROM and Kanji ROM
 <img width="4352" height="816" alt="Visualization -  N60  PC-6001mkII CGROM and Kanji ROM (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/5e948a40-6358-416d-9736-af63e54685a7" />
 Visualization of the contents of my PC-6001 CGROM with inherent character generation from its Mitsubishi M5C6847P-1 VDG
 <img width="4352" height="816" alt="Visualization -  N60  PC-6001 CGROM with inherent character generation from Mitsubishi M5C6847P-1 VDG" src="https://github.com/user-attachments/assets/245d03f2-06dd-43ad-a9d5-f3e3b13c9192" />
+Visualization of the combined character data from the PC-6001mkII CGROM and Kanji ROM with additional character data from the PC-6601 Nihongo Word Processor
+<img width="4352" height="816" alt="nwpkanji" src="https://github.com/user-attachments/assets/a13c2a37-90f7-49a5-b9cf-e1f1172a91db" />
+
 
 ## ROM Data Extraction
 If you need to get the data from your actual PC-6007SR cartridge or synthesize it from other font data, see the [おまけ：拡張漢字ROM
