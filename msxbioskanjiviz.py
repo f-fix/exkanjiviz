@@ -591,18 +591,24 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         (16 * 16 + 4, 20),
         (k3, k),
     )
+    puts_at(
+        dr,
+        "  Includes 8x8 Kanji: 月火水木金土日年円時分秒百千万大中小",
+        (16 * 16 + 4, 28),
+        (k3, k),
+    )
     if kanji_roms:
         puts_at(
             dr,
             "  Halfwidth Roman and Katakana (ｶﾀｶﾅ) set (8x16)",
-            (16 * 16 + 4, 28),
+            (16 * 16 + 4, 36),
             (k3, w3),
             font=2,
         )
         puts_at(
             dr,
             "  Halfwidth Roman and Katakana (ｶﾀｶﾅ) set (8x12)",
-            (16 * 16 + 4, 44),
+            (16 * 16 + 4, 52),
             (w, k),
             font=3,
         )
@@ -711,6 +717,14 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
             )
         xdeflect = 0
         for i, ch in enumerate("ＪＩＳ漢字、ひらがな、カタカナ、Ｒｏｍａｊｉ"):
+            kuten = [byt - 0xA0 for byt in ch.encode("EUC-JP")]
+            putkuten_at(
+                dr,
+                kuten,
+                ((18 + i) * 16 + 4 + xdeflect, 88),
+                (v, h),
+            )
+        for i, ch in enumerate("月火水木金土日年円時分秒百千万大中小"):
             kuten = [byt - 0xA0 for byt in ch.encode("EUC-JP")]
             putkuten_at(
                 dr,
