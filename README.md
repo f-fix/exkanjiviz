@@ -44,7 +44,7 @@ This PC-6601 Nihongo Word Processor disk contains `YUKARAJJ`/`ユーカラJJ` Ve
 ```
 160K "YukaraJJ Nihongo Word Processor Version 1.1 (Tokai Create) (NEC) (Japan) (PC-6001mkII, PC-6601).dsk" crc32:0aaad58e md5:96d26cf34d52c7974722853be4ebc46c sha1:bd0f10239208f2c0373246a83ff20b2d49ac4fd6 sha256:424c4e758514cf19d4c3739c6a8c1a3f20d96785a0b3e070e0dfc501e4725f5a size:163840
 ```
-# ... also msxbioskanjiviz
+# ... also msxbioskanjiviz and reorder_msx_rom
 quick-and-dirty visualizer for font data from:
 - MSX2/2+/TurboR `BIOS.ROM` `KANJI.ROM`
 - MSX2/2+/TurboR `BIOS.ROM` `KANJI1.ROM` `KANJI2.ROM`
@@ -77,6 +77,26 @@ For visualizing with the PC-6601 Nihongo Word Processor's added character data:
      - PC-6601: `python nwpkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM.66 nwp.dsk nwpkanji.png`
      - SR models: adjust the filenames
 4. the created `nwpkanji.png` will have a visualization of the character data, excluding the N60-mode character data, laid out according to JIS ordering, which is not the same as the storage order
+
+For visualizing MSX BIOS font and Kanji ROM data:
+1. prepare your ROM images (either real ones or synthesized ones) with kanji ROM in I/O port order
+    - You can convert IC order to I/O port order: `python reorder_msx_rom.py --ic ICKANJI.BIN --to=io --io KANJI.ROM`
+2. run it: `python msxbioskanjivis.py BIOS.ROM KANJI.ROM msxbioskanji.png`
+3. the created `msxbioskanji.png` will have a visualization of the character data.
+
+For converting MSX Kanji ROM data from IC order to I/O port order:
+`python reorder_msx_rom.py --ic ICKANJI.BIN --to=io --io KANJI.ROM`
+or
+```bash
+python3 -c 'import sys;_,ickanjifn,iokanjifn=sys.argv;ickanji=open(ickanjifn,"rb").read();assert len(ickanji) in {1<<17,1<<18};iokanji=bytes([ickanji[((i & 0b11000) << 12) | ((i & 0b11111111111100000) >> 2) | (i & 0b100000000000000111)] for i in range(len(ickanji))]);open(iokanjifn,"wb").write(iokanji)' ICKANJI.BIN KANJI.ROM
+```
+
+For converting MSX Kanji ROM data from I/O port order to IC order:
+`python reorder_msx_rom.py --io KANJI.ROM --to=ic --ic ICKANJI.BIN`
+or
+```bash
+python3 -c 'import sys;_,iokanjifn,ickanjifn=sys.argv;iokanji=open(iokanjifn,"rb").read();assert len(iokanji) in {1<<17,1<<18};ickanji=bytes([iokanji[((i & 0b11000000000000000) >> 12) | ((i & 0b111111111111000) << 2) | (i & 0b100000000000000111)] for i in range(len(iokanji))]);open(ickanjifn,"wb").write(ickanji)' KANJI.ROM ICKANJI.BIN
+```
 
 ## Visualization
 Visualization of the contents of my PC-6007SR Kakuchou Kanji ROM & RAM Cartridge
