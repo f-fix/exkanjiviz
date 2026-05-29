@@ -110,17 +110,15 @@ Visualization of the combined character data from the PC-6001mkII CGROM and Kanj
 There are four characters found both in the Nihongo Word Processor and in the Kakuchou Kanji ROM but with pixel differences: 01/86 `＊`, 24/79 `醐`,  29/25 `醜`, and 43/03 `烹`
 <img width="4352" height="816" alt="ac" src="https://github.com/user-attachments/assets/7f020387-06c4-45d6-97d6-615d794d6e58" />
 Visualization of Yamaha YIS-503 BIOS font
-<img width="4352" height="824" alt="8bitviz" src="https://github.com/user-attachments/assets/cda45cd4-6a67-4bc5-8c49-8b1735198aaa" />
-Visualization of Yamaha YIS-503 BIOS font and Panasonic FS-UV1 Kanji ROM
-<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/8e1243f0-e647-44c6-bf65-27fb59c7d960" />
+<img width="4352" height="824" alt="8bitviz" src="https://github.com/user-attachments/assets/d38c73e3-0184-4894-ac34-e0360a15f898" />
+Visualization of Sony HB-F1XD and Panasonic FS-UV1 Kanji ROM
+<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/635d1cac-3967-479b-88ea-3fe3c1d7cba9" />
 Visualization of Yamaha YIS-508/256 BIOS font and Kanji ROM
-<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/0742f606-cd97-440d-b104-4efabb274094" />
+<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/052b2353-8cd1-4d5e-8d58-d97a389c83e2" />
 Visualization of Sony HB-F1XV BIOS font and Kanji ROM
-<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/ca5de049-dbfe-4126-a563-7a3231e9bb71" />
+<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/17bd9096-d0bb-4a7d-8baf-c95232ba2992" />
 Visualization of Panasonic FS-A1GT BIOS font and Kanji ROM
-<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/4cf3e5d5-8a8d-4f72-868d-93a3099fb595" />
-
-
+<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/6d724442-eb9a-41d3-ba31-225d21cb766a" />
 
 ## ROM Data Extraction
 If you need to get the data from your actual PC-6007SR cartridge or synthesize it from other font data, see the [おまけ：拡張漢字ROM
