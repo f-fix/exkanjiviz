@@ -361,7 +361,7 @@ def shuffle_bios(b):
     return b"".join(
         [
             b"".join(
-                bytes([font[ch * 8 + y], 0xFF ^ font[ch * 8 + y]]) for y in range(8)
+                bytes([font[ch * 8 + y], 0xFC & font[ch * 8 + y]]) for y in range(8)
             )
             for ch in range(256)
         ]
@@ -522,7 +522,10 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         x, y = coords
         fg, bg = color_pair
         if font in (2, 3):
+            byt = ord(ch.encode("SJIS"))
             for i in range(128):
+                if font == 1 and (i % 8) >= 6:
+                    continue
                 dr.point(
                     (x + i % 8, y + i // 8),
                     (
@@ -530,7 +533,7 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
                         if b[
                             256 * 32
                             + (font & 1)
-                            + 32 * ord(ch.encode("SJIS"))
+                            + 32 * byt
                             + 2 * (i // 8)
                         ]
                         & (0x80 >> (i % 8))
@@ -564,9 +567,26 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
 
     def puts_at(dr, s, coords, color_pair, font=0, scale=1):
         x, y = coords
-        s = unicodedata.normalize("NFD", s)
+        if font != 2:
+            s = unicodedata.normalize("NFD", s)
         for i in range(len(s)):
             ch = s[i : i + 1]
+            if font == 2 and kanji_roms:
+                if (
+                    ch.encode("SJIS", "ignore").decode("SJIS") == ch
+                    and len(ch.encode("SJIS")) == 2
+                    and ch.encode("EUC-JP", "ignore").decode("EUC-JP") == ch
+                    and len(ch.encode("EUC-JP")) == 2
+                ):
+                    kuten = [byt - 0xA0 for byt in ch.encode("EUC-JP")]
+                    putkuten_at(
+                        dr,
+                        kuten,
+                        (x + 8 * scale * i, y),
+                        color_pair,
+                    )
+                    x += 8 * scale
+                    continue
             if ch == "\N{LEFTWARDS ARROW}":
                 ch = "<"
             elif ch == "\N{DOWNWARDS ARROW}":
@@ -575,7 +595,14 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
                 ch = ">"
             elif ch == "\N{UPWARDS ARROW}":
                 ch = "^"
-            putch_at(dr, ch, (x + 8 * scale * i, y), color_pair, font, scale)
+            putch_at(
+                dr,
+                ch,
+                (x + (6 if font == 1 else 8) * scale * i, y),
+                color_pair,
+                font,
+                scale,
+            )
 
     dr = ImageDraw.Draw(im)
     if kanji_roms:
@@ -588,27 +615,55 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
     puts_at(
         dr,
         "\N{LEFTWARDS ARROW} 8-bit Roman and Kana (ｶﾀｶﾅ and ひらがな) set (8x8)",
-        (16 * 16 + 4, 20),
-        (k3, k),
+        (16 * 16 + 4, 16),
+        (k3, w3),
     )
     puts_at(
         dr,
         "  Includes 8x8 Kanji: 月火水木金土日年円時分秒百千万大中小",
-        (16 * 16 + 4, 28),
+        (16 * 16 + 4, 24),
+        (k3, w3),
+    )
+    puts_at(
+        dr,
+        "\N{LEFTWARDS ARROW} SCREEN 0 Roman and Kana (ｶﾀｶﾅ and ひらがな) set (6x8)",
+        (16 * 16 + 4, 32),
         (k3, k),
+        font=1,
+    )
+    puts_at(
+        dr,
+        "  Includes 6x8 Kanji: 月火水木金土日年円時分秒百千万大中小",
+        (16 * 16 + 4, 40),
+        (k3, k),
+        font=1,
     )
     if kanji_roms:
         puts_at(
             dr,
             "  Halfwidth Roman and Katakana (ｶﾀｶﾅ) set (8x16)",
-            (16 * 16 + 4, 36),
+            (16 * 16 + 4, 52),
             (k3, w3),
             font=2,
         )
         puts_at(
             dr,
             "  Halfwidth Roman and Katakana (ｶﾀｶﾅ) set (8x12)",
-            (16 * 16 + 4, 52),
+            (16 * 16 + 4, 68),
+            (w, k),
+            font=3,
+        )
+        puts_at(
+            dr,
+            "  Halfwidth Roman and Katakana (ｶﾀｶﾅ) set (8x16) \N{RIGHTWARDS ARROW}",
+            (16 * 16 * 14 + 4, 52),
+            (k3, w3),
+            font=2,
+        )
+        puts_at(
+            dr,
+            "  Halfwidth Roman and Katakana (ｶﾀｶﾅ) set (8x12) \N{RIGHTWARDS ARROW}",
+            (16 * 16 * 14 + 4, 68),
             (w, k),
             font=3,
         )
@@ -671,6 +726,8 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
             and (i // 256 >= discontinuity)
             # and (cvtr(((i // 256) - discontinuity) // 96) <= 87)
         ):
+            if (i // 256 < 256) and i % 16 >= 14:
+                continue
             dr.point(
                 (chx(i // 256) * 16 + i % 16, chy(i // 256) * 16 + (i // 16) % 16),
                 (
@@ -715,23 +772,20 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
                 ),
                 (k, w1),
             )
-        xdeflect = 0
-        for i, ch in enumerate("ＪＩＳ漢字、ひらがな、カタカナ、Ｒｏｍａｊｉ"):
-            kuten = [byt - 0xA0 for byt in ch.encode("EUC-JP")]
-            putkuten_at(
-                dr,
-                kuten,
-                ((18 + i) * 16 + 4 + xdeflect, 88),
-                (v, h),
-            )
-        for i, ch in enumerate("月火水木金土日年円時分秒百千万大中小"):
-            kuten = [byt - 0xA0 for byt in ch.encode("EUC-JP")]
-            putkuten_at(
-                dr,
-                kuten,
-                ((18 + i) * 16 + 4 + xdeflect, 104),
-                (v, h),
-            )
+        puts_at(
+            dr,
+            "漢字、ひらがな、カタカナ、Ｒｏｍａｊｉ、ｶﾀｶﾅ､Romaji",
+            (16 * 16 + 4, 88),
+            (v, h),
+            font=2,
+        )
+        puts_at(
+            dr,
+            "月火水木金土日年円時分秒百千万大中小",
+            (16 * 16 + 4, 104),
+            (v, h),
+            font=2,
+        )
     im.save(bioskanji_png)
 
 
