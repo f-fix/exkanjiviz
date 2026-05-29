@@ -530,12 +530,7 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
                     (x + i % 8, y + i // 8),
                     (
                         fg
-                        if b[
-                            256 * 32
-                            + (font & 1)
-                            + 32 * byt
-                            + 2 * (i // 8)
-                        ]
+                        if b[256 * 32 + (font & 1) + 32 * byt + 2 * (i // 8)]
                         & (0x80 >> (i % 8))
                         else bg
                     ),
