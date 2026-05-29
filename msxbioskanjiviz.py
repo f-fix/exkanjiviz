@@ -4,6 +4,7 @@
 quick-and-dirty visualizer for font data from:
 - MSX2/2+/TurboR `BIOS.ROM` `KANJI.ROM`
 - MSX2/2+/TurboR `BIOS.ROM` `KANJI1.ROM` `KANJI2.ROM`
+the ROM data should be in I/O port order.
 """
 
 
