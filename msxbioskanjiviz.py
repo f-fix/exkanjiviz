@@ -363,10 +363,7 @@ def decode_msxjp_8bit_charset(byts, preserve=MINIMAL_CONTROLS):
             and byt >= 0x40
             and byt <= 0x5F
         ):
-            s = (
-                s[: -len(MSXJP_8BIT_CHARSET[0x01])]
-                + MSXJP_8BIT_ALTCHARSET[byt - 0x40]
-            )
+            s = s[: -len(MSXJP_8BIT_CHARSET[0x01])] + MSXJP_8BIT_ALTCHARSET[byt - 0x40]
         elif byt in preserve:
             s += chr(byt)
         else:
@@ -514,8 +511,7 @@ def smoke_test_msxjp_8bit_charset():
         decode_msxjp_8bit_charset(msxjp_8bit_test) == expected_unicode
     ), f"decode_msxjp_8bit_charset({repr(msxjp_8bit_test)}) returned:\n {repr(decode_msxjp_8bit_charset(msxjp_8bit_test))}, expecting:\n {repr(expected_unicode)}"
     assert (
-        encode_msxjp_8bit_charset(expected_unicode, try_harder=False)
-        == msxjp_8bit_test
+        encode_msxjp_8bit_charset(expected_unicode, try_harder=False) == msxjp_8bit_test
     ), f"encode_msxjp_8bit_charset({repr(expected_unicode)}, try_harder=False) returned:\n {repr(encode_msxjp_8bit_charset(expected_unicode, try_harder=False))}, expecting:\n {repr(msxjp_8bit_test)}"
     expected_no_controls_unicode = (
         "␍␊".join(
@@ -593,19 +589,23 @@ def smoke_test_msxjp_8bit_charset():
             == expected_result
         ), f"decode_msxjp_8bit_charset(encode_msxjp_8bit_charset({repr(test_data)})) returned:\n {repr(decode_msxjp_8bit_charset(encode_msxjp_8bit_charset(test_data)))}, expecting:\n {repr(expected_result)}"
 
+
 smoke_test_msxjp_8bit_charset()
+
 
 def shuffle_bios(b):
     cgtabl = int.from_bytes(b[4:6], "little")
-    font = b[cgtabl:256*8+cgtabl]
+    font = b[cgtabl : 256 * 8 + cgtabl]
     assert len(font) == 2048
-    return b"".join([
-        b"".join(
-            bytes([font[ch * 8 + y], 0xFF ^ font[ch * 8 + y]])
-            for y in range(8)
-        )
-        for ch in range(256)
-    ])
+    return b"".join(
+        [
+            b"".join(
+                bytes([font[ch * 8 + y], 0xFF ^ font[ch * 8 + y]]) for y in range(8)
+            )
+            for ch in range(256)
+        ]
+    )
+
 
 def shuffle_kanji_cc(ch):
     return ch
@@ -621,19 +621,24 @@ def shuffle_kanji_cc(ch):
     print(row32, row32_shuf)
     return col32 + 32 * row32_shuf
 
+
 def shuffle_glyph(glyph):
     assert len(glyph) == 32
-    return b"".join([glyph[i:1+i] + glyph[8+i:9+i] for i in range(8)] + [glyph[16+i:17+i] + glyph[24+i:25+i] for i in range(8)])
+    return b"".join(
+        [glyph[i : 1 + i] + glyph[8 + i : 9 + i] for i in range(8)]
+        + [glyph[16 + i : 17 + i] + glyph[24 + i : 25 + i] for i in range(8)]
+    )
+
 
 def shuffle_kanji(k):
     assert len(k) % 32 == 0
     return b"".join(
-        shuffle_glyph(b"".join(
-            bytes([k[32 * shuffle_kanji_cc(ch) + o]])
-            for o in range(32)
-        ))
+        shuffle_glyph(
+            b"".join(bytes([k[32 * shuffle_kanji_cc(ch) + o]]) for o in range(32))
+        )
         for ch in range(len(k) // 32)
     )
+
 
 def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
     """Given an input file named by `bios` containing MSX BIOS+BASIC and one or two named by `kanji_roms` containing Kanji font ROM data in I/O readout order, produce a visualization and save it as a PNG in the output file named by `bioskanji_png`."""
@@ -648,18 +653,32 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
     if kanji_roms:
         k = b"".join([open(kanji_rom, "rb").read() for kanji_rom in kanji_roms])
         k = shuffle_kanji(k)
-        b = b[:256*32] + b"\0" * 32 * 32 + k[:96 * 32] + b"\0" * 32 * 32 + k[9*96*32:10*96*32] + b[512*32:]
-        xb = xb[:256*32] + b"\xff" * 32 * 32 + b"\0" * 96 * 32 + b"\xff" * 32 * 32 + b"\0" * 96 * 32 + xb[512*32:]
+        b = (
+            b[: 256 * 32]
+            + b"\0" * 32 * 32
+            + k[: 96 * 32]
+            + b"\0" * 32 * 32
+            + k[9 * 96 * 32 : 10 * 96 * 32]
+            + b[512 * 32 :]
+        )
+        xb = (
+            xb[: 256 * 32]
+            + b"\xff" * 32 * 32
+            + b"\0" * 96 * 32
+            + b"\xff" * 32 * 32
+            + b"\0" * 96 * 32
+            + xb[512 * 32 :]
+        )
     xk = b"\0" * len(k)
     k += b"\0" * (32 * discontinuity - len(k))
     xk += b"\xff" * (len(k) - len(xk))
-    b += k[:(11*96-32)*32] + b"\xff" * 32 *32 + k[(11*96-32)*32:]
-    xb += xk[:(11*96-32)*32] + b"\xff" * 32 *32 + xk[(11*96-32)*32:]
+    b += k[: (11 * 96 - 32) * 32] + b"\xff" * 32 * 32 + k[(11 * 96 - 32) * 32 :]
+    xb += xk[: (11 * 96 - 32) * 32] + b"\xff" * 32 * 32 + xk[(11 * 96 - 32) * 32 :]
     b += b"\0" * (128 * discontinuity - len(b))
     xb += b"\xff" * (len(b) - len(xb))
 
     def cvtr(r):
-        return 0*1 + r + 5 * (r >= 11)
+        return 0 * 1 + r + 5 * (r >= 11)
 
     def rtok(byts):
         return (
@@ -671,7 +690,9 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         )
 
     def invc(cc):
-        if (cc - discontinuity) // 96 == 2 and (cc - discontinuity) % 96 not in range(1, 14+1):
+        if (cc - discontinuity) // 96 == 2 and (cc - discontinuity) % 96 not in range(
+            1, 14 + 1
+        ):
             return True  # added in 83jis, not in 78jis
         if (cc - discontinuity) // 96 == 8:
             return True  # added in 83jis, not in 78jis
@@ -681,7 +702,12 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
             False
             if (cc < discontinuity)
             else not rtok(
-                bytes([min(cvtr((cc - discontinuity) // 96), 95) + 0xA0, (cc - discontinuity) % 96 + 0xA0])
+                bytes(
+                    [
+                        min(cvtr((cc - discontinuity) // 96), 95) + 0xA0,
+                        (cc - discontinuity) % 96 + 0xA0,
+                    ]
+                )
             )
         )
 
@@ -709,13 +735,18 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
                 ((96 + z - 1) // z - 1) * ((96 + z - 1) // z + 1)
                 + max(16, (96 + z - 1) // z)
             )
-            * 16 + 8,
+            * 16
+            + 8,
         ),
         g,
     )
 
     def kuten_ch(kuten):
-        return discontinuity + (kuten[0] - 0*1 - (5 if kuten[0] >= 16 else 0)) * 96 + kuten[1]
+        return (
+            discontinuity
+            + (kuten[0] - 0 * 1 - (5 if kuten[0] >= 16 else 0)) * 96
+            + kuten[1]
+        )
 
     def putkuten_at(dr, kuten, coords, color_pair):
         x, y = coords
@@ -729,11 +760,21 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
     def putch_at(dr, ch, coords, color_pair, font, scale=1):
         x, y = coords
         fg, bg = color_pair
-        if font in (2,3):
+        if font in (2, 3):
             for i in range(128):
                 dr.point(
                     (x + i % 8, y + i // 8),
-                    (fg if b[256 * 32 + (font & 1) + 32 * ord(ch.encode("SJIS")) + 2 * (i // 8)] & (0x80 >> (i % 8)) else bg),
+                    (
+                        fg
+                        if b[
+                            256 * 32
+                            + (font & 1)
+                            + 32 * ord(ch.encode("SJIS"))
+                            + 2 * (i // 8)
+                        ]
+                        & (0x80 >> (i % 8))
+                        else bg
+                    ),
                 )
             return
         ch = encode_msxjp_8bit_charset(ch)
@@ -840,7 +881,10 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         return (
             (cc % 16) + (15 * (16 + 1) if cc >= 256 else 0)
             if (cc < discontinuity)
-            else ((cc - discontinuity) % z + (z + 1) * (cvtr((cc - discontinuity) // 96) % z))
+            else (
+                (cc - discontinuity) % z
+                + (z + 1) * (cvtr((cc - discontinuity) // 96) % z)
+            )
         )
 
     def chy(cc):
@@ -858,7 +902,7 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
             not xb[i // 8]
             or kanji_roms
             and (i // 256 >= discontinuity)
-            #and (cvtr(((i // 256) - discontinuity) // 96) <= 87)
+            # and (cvtr(((i // 256) - discontinuity) // 96) <= 87)
         ):
             dr.point(
                 (chx(i // 256) * 16 + i % 16, chy(i // 256) * 16 + (i // 16) % 16),
@@ -889,13 +933,19 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
             puts_at(
                 dr,
                 f"{i + (5 if i >= 11 else 0):02d}",
-                (16 * chx(discontinuity + 96 * i), 16 * chy(discontinuity + 96 * i) - 8),
+                (
+                    16 * chx(discontinuity + 96 * i),
+                    16 * chy(discontinuity + 96 * i) - 8,
+                ),
                 (k, w1),
             )
             puts_at(
                 dr,
                 f"{i + (5 if i >= 11 else 0):02d}",
-                (16 * chx(discontinuity + 96 * i + 95), 16 * chy(discontinuity + 96 * i + 95) + 16),
+                (
+                    16 * chx(discontinuity + 96 * i + 95),
+                    16 * chy(discontinuity + 96 * i + 95) + 16,
+                ),
                 (k, w1),
             )
         xdeflect = 0
