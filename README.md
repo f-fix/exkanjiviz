@@ -4,7 +4,7 @@ quick-and-dirty visualizer for font data from:
 - PC-6601-01 Kakuchou Kanji ROM cartridge / 拡張漢字ＲＯＭカートリッジ in `saverkanji` `EXKANJI.ROM` format
 - PC-8801 series level 1 Kanji ROM `kanji1.rom`
 
-Even without a Kanji ROM, there are 18 specific Kanji available in every Japanese PC-6000 series CGROM: `月火水木金土日年円時分秒百千万大中小`
+Even without a Kanji ROM, there are 18 specific Kanji available in every Japanese PC-6000 series CGROM at small sizes: `月火水木金土日年円時分秒百千万大中小`
 
 # ... and exkanji2kanjirom
 quick-and-dirty PC-6001mkII and PC-6601 Kanji ROM construction using font data from:
