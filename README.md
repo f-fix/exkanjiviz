@@ -49,7 +49,9 @@ quick-and-dirty visualizer for font data from:
 - Japanese MSX/MSX2/2+/TurboR `BIOS.ROM`
 - Japanese MSX2/2+/TurboR `BIOS.ROM` `KANJI.ROM`
 - Japanese MSX2/2+/TurboR `BIOS.ROM` `KANJI1.ROM` `KANJI2.ROM`
+
 Note: the visualizer expects MSX Kanji ROM data in I/O port order. You can reorder betweeen I/O port order and IC order using `reorder_msx_rom.py`.
+
 Even without a Kanji ROM, there are 18 specific Kanji available in every Japanese MSX BIOS at 8x8 and (truncated) 6x8 sizes: `月火水木金土日年円時分秒百千万大中小`
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
