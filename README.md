@@ -123,6 +123,8 @@ MSX2+ with inherent JIS Level 1 & Level 2 Kanji: Visualization of Sony HB-F1XV B
 <img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/fd5408cd-a577-4231-8c45-aefe97d0d905" />
 MSX Turbo R with inherent JIS Level 1 & Level 2 Kanji: Visualization of Panasonic FS-A1GT BIOS font and Kanji ROM
 <img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/2f4e5260-3bc2-4bf9-bae0-bc8c6fb6e8fa" />
+Freely available substitutes: Here's a visualization of the Japanese BIOS font from the C-BIOS 0.29a substitute MSX BIOS from https://cbios.sourceforge.net/ with the AtoC substitute MSX Kanji ROM from http://www.yo.rim.or.jp/%7Eanaka/AtoC/labo/labo32.htm (this is the same Kanji ROM data that D4's Project EGG and Pico Pico use for MSX2+ emulation)
+<img width="4352" height="824" alt="image" src="https://github.com/user-attachments/assets/9d1e8611-e8b6-47d6-89a2-403a894c7a7e" />
 
 ## ROM Data Extraction
 If you need to get the data from your actual PC-6007SR cartridge or synthesize it from other font data, see the [おまけ：拡張漢字ROM
