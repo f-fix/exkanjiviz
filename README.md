@@ -46,9 +46,11 @@ This PC-6601 Nihongo Word Processor disk contains `YUKARAJJ`/`ユーカラJJ` Ve
 ```
 # ... also msxbioskanjiviz and reorder_msx_rom
 quick-and-dirty visualizer for font data from:
-- MSX2/2+/TurboR `BIOS.ROM` `KANJI.ROM`
-- MSX2/2+/TurboR `BIOS.ROM` `KANJI1.ROM` `KANJI2.ROM`
+- Japanese MSX/MSX2/2+/TurboR `BIOS.ROM`
+- Japanese MSX2/2+/TurboR `BIOS.ROM` `KANJI.ROM`
+- Japanese MSX2/2+/TurboR `BIOS.ROM` `KANJI1.ROM` `KANJI2.ROM`
 Note: the visualizer expects MSX Kanji ROM data in I/O port order. You can reorder betweeen I/O port order and IC order using `reorder_msx_rom.py`.
+Even without a Kanji ROM, there are 18 specific Kanji available in every Japanese MSX BIOS at 8x8 and (truncated) 6x8 sizes: `月火水木金土日年円時分秒百千万大中小`
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
     - if you have `EXTKANJI.ROM` concatenated deinterleaved format, run `python interleave.py -o EXKANJI.ROM EXTKANJI.ROM`
@@ -110,7 +112,7 @@ Visualization of the combined character data from the PC-6001mkII CGROM and Kanj
 <img width="4352" height="816" alt="nwpkanji" src="https://github.com/user-attachments/assets/a13c2a37-90f7-49a5-b9cf-e1f1172a91db" />
 There are four characters found both in the Nihongo Word Processor and in the Kakuchou Kanji ROM but with pixel differences: 01/86 `＊`, 24/79 `醐`,  29/25 `醜`, and 43/03 `烹`
 <img width="4352" height="816" alt="ac" src="https://github.com/user-attachments/assets/7f020387-06c4-45d6-97d6-615d794d6e58" />
-### MSX/MSX2/MSX2+/MSX Turbo R Character Data Visualizations
+### Japanese MSX/MSX2/MSX2+/MSX Turbo R Character Data Visualizations
 MSX with no Kanji ROM: Visualization of Yamaha YIS-503 BIOS font
 <img width="4352" height="824" alt="8bitviz" src="https://github.com/user-attachments/assets/4efbf078-4797-47c9-9ad7-ff7351729103" />
 MSX2 with cartridge-supplied JIS Level 1 Kanji: Visualization of Sony HB-F1XD BIOS font with Panasonic FS-UV1 Kanji ROM
