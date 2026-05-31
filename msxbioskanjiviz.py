@@ -354,41 +354,36 @@ def smoke_test_msxjp_8bit_charset():
 smoke_test_msxjp_8bit_charset()
 
 
-def shuffle_bios(b):
-    cgtabl = int.from_bytes(b[4:6], "little")
-    font = b[cgtabl : 256 * 8 + cgtabl]
-    assert len(font) == 2048
-    return b"".join(
-        [
-            b"".join(
-                bytes([font[ch * 8 + y], 0xFC & font[ch * 8 + y]]) for y in range(8)
-            )
-            for ch in range(256)
-        ]
-    )
-
-
-def shuffle_kanji_cc(ch):
-    return ch
-    # 3 / 4 / 5 => 1 / 17 / 9
-    # 9 / 10 / 11 => 3 / 19 / 11
-    # 12 / 13 / 14 => 4 / 20 / 12
-    # 21 / 22 / 23 => 7 / 23 / 15
-    # 30 / 31 / 32 => 32 / 48 / 64
-    row32, col32 = ch // 32, ch % 32
-    row32_shuf = row32
-    if row32 < 24:
-        row32_shuf = 24 * (row32 // 24) + (0, 16, 8)[row32 % 3] + (row32 % 24) // 3
-    print(row32, row32_shuf)
-    return col32 + 32 * row32_shuf
-
-
 def shuffle_glyph(glyph):
     assert len(glyph) == 32
     return b"".join(
         [glyph[i : 1 + i] + glyph[8 + i : 9 + i] for i in range(8)]
         + [glyph[16 + i : 17 + i] + glyph[24 + i : 25 + i] for i in range(8)]
     )
+
+
+def shuffle_bios(b):
+    cgtabl = int.from_bytes(b[4:6], "little")
+    font = b[cgtabl : 256 * 8 + cgtabl]
+    assert len(font) == 2048
+    # The 8x8 character sets are shuffled for display as 16x16 tiles
+    return b"".join(
+        [
+            b"".join(
+                bytes([font[ch * 8 + y], 0xFC & font[ch * 8 + y]]) for y in range(8)
+            )
+            for ch in (
+                (xch & 0xE0) | ((xch & 0x1E) >> 1) | ((xch & 0x01) << 4)
+                for xch in range(256)
+            )
+        ]
+    )
+
+
+def shuffle_kanji_cc(ch):
+    # TODO: possibly add mappings from more recent SJIS to equivalent
+    # MSX extensions to 78JIS?
+    return ch
 
 
 def shuffle_kanji(k):
@@ -425,9 +420,11 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         xb = (
             xb[: 256 * 32]
             + b"\xff" * 32 * 32
-            + b"\0" * 96 * 32
+            + (b"\0\xff" * 4 + b"\0" * 24) * 96
             + b"\xff" * 32 * 32
-            + b"\0" * 96 * 32
+            + (b"\0\xff" * 4 + b"\0" * 24) * 80
+            + (b"\0" * 32) * 10
+            + (b"\0\xff" * 4 + b"\0" * 24) * 6
             + xb[512 * 32 :]
         )
     xk = b"\0" * len(k)
@@ -524,10 +521,10 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         if font in (2, 3):
             byt = ord(ch.encode("SJIS"))
             for i in range(128):
-                if font == 1 and (i % 8) >= 6:
+                if font == 3 and byt not in range(0xF0, 1 + 0xF9) and i < 4 * 8:
                     continue
                 dr.point(
-                    (x + i % 8, y + i // 8),
+                    (x + i % 8, y + i // 8 - 2 * (font == 3)),
                     (
                         fg
                         if b[256 * 32 + (font & 1) + 32 * byt + 2 * (i // 8)]
@@ -540,7 +537,11 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         if len(ch) == 2 and ch[0] == 0x01:
             ch = bytes([ch[1] - 0x40])
         for i in range(64):
-            if xb[ord(ch) * 16 + (font & 1) + 256 * 16 * (font >> 1) + 2 * (i // 8)] & (
+            if font == 1 and (i % 8) >= 6:
+                continue
+            # The 8x8 character sets are shuffled for display as 16x16 tiles, so undo that
+            rcc = (ord(ch) & 0xE0) | ((ord(ch) & 0x0F) << 1) | ((ord(ch) & 0x10) >> 4)
+            if xb[rcc * 16 + (font & 1) + 256 * 16 * (font >> 1) + 2 * (i // 8)] & (
                 0x80 >> (i % 8)
             ):
                 continue
@@ -550,7 +551,7 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
                     (
                         fg
                         if b[
-                            ord(ch) * 16
+                            rcc * 16
                             + (font & 1)
                             + 256 * 16 * (font >> 1)
                             + 2 * (i // 8)
@@ -604,8 +605,9 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         puts_at(
             dr,
             " MSX Kanji ROM ",
-            (16 * 16 + 8, 4),
+            (16 * 16 + 8, 0),
             (v, h),
+            font=2,
         )
     puts_at(
         dr,
@@ -676,7 +678,7 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
         )
         puts_at(
             dr,
-            "fullwidth character set (extended subset of old JIS with level 1 Kanji)",
+            "fullwidth character set (extended 78JIS)",
             (16 * 16 + 8, (16 - (96 + z - 1) // z - 2) * 16 - 4),
             (w, k),
         )
