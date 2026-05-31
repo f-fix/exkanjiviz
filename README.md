@@ -111,10 +111,12 @@ There are four characters found both in the Nihongo Word Processor and in the Ka
 <img width="4352" height="816" alt="ac" src="https://github.com/user-attachments/assets/7f020387-06c4-45d6-97d6-615d794d6e58" />
 Visualization of Yamaha YIS-503 BIOS font
 <img width="4352" height="824" alt="8bitviz" src="https://github.com/user-attachments/assets/d38c73e3-0184-4894-ac34-e0360a15f898" />
-Visualization of Sony HB-F1XD and Panasonic FS-UV1 Kanji ROM
+Visualization of Sony HB-F1XD BIOS font and Panasonic FS-UV1 Kanji ROM
 <img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/635d1cac-3967-479b-88ea-3fe3c1d7cba9" />
 Visualization of Yamaha YIS-508/256 BIOS font and Kanji ROM
 <img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/052b2353-8cd1-4d5e-8d58-d97a389c83e2" />
+Visualization of Sanyo PHC-70FD2 BIOS font and Kanji ROM
+<img width="4352" height="824" alt="kanjiviz" src="https://github.com/user-attachments/assets/2aa08077-7ee1-4ee8-a277-1683964160b1" />
 Visualization of Sony HB-F1XV BIOS font and Kanji ROM
 <img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/17bd9096-d0bb-4a7d-8baf-c95232ba2992" />
 Visualization of Panasonic FS-A1GT BIOS font and Kanji ROM
