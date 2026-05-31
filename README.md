@@ -99,6 +99,7 @@ python3 -c 'import sys;_,iokanjifn,ickanjifn=sys.argv;iokanji=open(iokanjifn,"rb
 ```
 
 ## Visualization
+### PC-6000 Series Character Data Visualizations
 Visualization of the contents of my PC-6007SR Kakuchou Kanji ROM & RAM Cartridge
 <img width="4352" height="816" alt="Visualization -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/6f0b8159-5c19-490d-9a6f-b3857a521a26" />
 Visualization of the contents of my PC-6001mkII CGROM and Kanji ROM
@@ -109,18 +110,19 @@ Visualization of the combined character data from the PC-6001mkII CGROM and Kanj
 <img width="4352" height="816" alt="nwpkanji" src="https://github.com/user-attachments/assets/a13c2a37-90f7-49a5-b9cf-e1f1172a91db" />
 There are four characters found both in the Nihongo Word Processor and in the Kakuchou Kanji ROM but with pixel differences: 01/86 `＊`, 24/79 `醐`,  29/25 `醜`, and 43/03 `烹`
 <img width="4352" height="816" alt="ac" src="https://github.com/user-attachments/assets/7f020387-06c4-45d6-97d6-615d794d6e58" />
-Visualization of Yamaha YIS-503 BIOS font
-<img width="4352" height="824" alt="8bitviz" src="https://github.com/user-attachments/assets/d38c73e3-0184-4894-ac34-e0360a15f898" />
-Visualization of Sony HB-F1XD BIOS font and Panasonic FS-UV1 Kanji ROM
-<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/635d1cac-3967-479b-88ea-3fe3c1d7cba9" />
-Visualization of Yamaha YIS-508/256 BIOS font and Kanji ROM
-<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/052b2353-8cd1-4d5e-8d58-d97a389c83e2" />
-Visualization of Sanyo PHC-70FD2 BIOS font and Kanji ROM
-<img width="4352" height="824" alt="kanjiviz" src="https://github.com/user-attachments/assets/2aa08077-7ee1-4ee8-a277-1683964160b1" />
-Visualization of Sony HB-F1XV BIOS font and Kanji ROM
-<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/17bd9096-d0bb-4a7d-8baf-c95232ba2992" />
-Visualization of Panasonic FS-A1GT BIOS font and Kanji ROM
-<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/6d724442-eb9a-41d3-ba31-225d21cb766a" />
+### MSX/MSX2/MSX2+/MSX Turbo R Character Data Visualizations
+MSX with no Kanji ROM: Visualization of Yamaha YIS-503 BIOS font
+<img width="4352" height="824" alt="8bitviz" src="https://github.com/user-attachments/assets/4efbf078-4797-47c9-9ad7-ff7351729103" />
+MSX2 with cartridge-supplied JIS Level 1 Kanji: Visualization of Sony HB-F1XD BIOS font with Panasonic FS-UV1 Kanji ROM
+<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/1e002e93-0e6f-4c80-954e-e452fc6b1087" />
+MSX2 with inherent JIS Level 1 Kanji: Visualization of Yamaha YIS-805/256 BIOS font and Kanji ROM
+<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/cebccebb-2bb0-4811-94c3-e9622d3317bd" />
+MSX2+ with inherent JIS Level 1 & Level 2 Kanji: Visualization of Sanyo PHC-70FD2 BIOS font and Kanji ROM
+<img width="4352" height="824" alt="kanjiviz" src="https://github.com/user-attachments/assets/dd2e5d4e-fe35-4586-92ca-a34ac48d8461" />
+MSX2+ with inherent JIS Level 1 & Level 2 Kanji: Visualization of Sony HB-F1XV BIOS font and Kanji ROM
+<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/fd5408cd-a577-4231-8c45-aefe97d0d905" />
+MSX Turbo R with inherent JIS Level 1 & Level 2 Kanji: Visualization of Panasonic FS-A1GT BIOS font and Kanji ROM
+<img width="4352" height="824" alt="viz" src="https://github.com/user-attachments/assets/2f4e5260-3bc2-4bf9-bae0-bc8c6fb6e8fa" />
 
 ## ROM Data Extraction
 If you need to get the data from your actual PC-6007SR cartridge or synthesize it from other font data, see the [おまけ：拡張漢字ROM
