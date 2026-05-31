@@ -78,7 +78,7 @@ For visualizing CGROM and KANJIROM:
 
 For visualizing with the PC-6601 Nihongo Word Processor's added character data:
 1. prepare your ROM images (either real ones or synthesized ones) with the kanji ROM deinterleaved
-2. prepare your DSK image ([HxCFE tools](https://github.com/jfdelnero/HxCFloppyEmulator) can be ued to convert from other formats such as D88)
+2. prepare your DSK image ([HxCFE tools](https://github.com/jfdelnero/HxCFloppyEmulator) can be used to convert from other formats such as D88)
 3. run it:
      - PC-6001mkII: `python nwpkanjiviz.py CGROM60.62 CGROM60m.62 KANJIROM.62 nwp.dsk nwpkanji.png`
      - PC-6601: `python nwpkanjiviz.py CGROM60.66 CGROM66.66 KANJIROM.66 nwp.dsk nwpkanji.png`
@@ -109,14 +109,19 @@ python3 -c 'import sys;_,iokanjifn,ickanjifn=sys.argv;iokanji=open(iokanjifn,"rb
 ### PC-6000 Series Character Data Visualizations
 Visualization of the contents of my PC-6007SR Kakuchou Kanji ROM & RAM Cartridge
 <img width="4352" height="816" alt="Visualization -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/6f0b8159-5c19-490d-9a6f-b3857a521a26" />
-Visualization of the contents of my PC-6001mkII CGROM and Kanji ROM
+Visualization of the contents of my PC-6001mkII's CGROM and Kanji ROM
 <img width="4352" height="816" alt="Visualization -  N60  PC-6001mkII CGROM and Kanji ROM (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/5e948a40-6358-416d-9736-af63e54685a7" />
-Visualization of the contents of my PC-6001 CGROM with inherent character generation from its Mitsubishi M5C6847P-1 VDG
+Visualization of the contents of my PC-6001's CGROM with inherent character generation from its Mitsubishi M5C6847P-1 VDG
 <img width="4352" height="816" alt="Visualization -  N60  PC-6001 CGROM with inherent character generation from Mitsubishi M5C6847P-1 VDG" src="https://github.com/user-attachments/assets/245d03f2-06dd-43ad-a9d5-f3e3b13c9192" />
-Visualization of the combined character data from the PC-6001mkII CGROM and Kanji ROM with additional character data from the PC-6601 Nihongo Word Processor
+Visualization of the combined character data from my PC-6001mkII's CGROM and Kanji ROM with additional character data from the PC-6601 Nihongo Word Processor
 <img width="4352" height="816" alt="nwpkanji" src="https://github.com/user-attachments/assets/a13c2a37-90f7-49a5-b9cf-e1f1172a91db" />
 There are four characters found both in the Nihongo Word Processor and in the Kakuchou Kanji ROM but with pixel differences: 01/86 `＊`, 24/79 `醐`,  29/25 `醜`, and 43/03 `烹`
 <img width="4352" height="816" alt="ac" src="https://github.com/user-attachments/assets/7f020387-06c4-45d6-97d6-615d794d6e58" />
+Visualization of the contents of CGROM2.0's EXKANJI.ROM replacement from https://eighttails.seesaa.net/article/305067428.html
+<img width="4352" height="816" alt="exkanji" src="https://github.com/user-attachments/assets/c489f007-13e9-4efc-9f1e-4fd77c171c23" />
+Visualization of the contents of CGROM2.0's CGROM60.62, CGROM60m.62, and KANJIROM.62 from https://eighttails.seesaa.net/article/305067428.html
+<img width="4352" height="816" alt="cgromkanjiviz" src="https://github.com/user-attachments/assets/a07e12c9-bcef-4a50-911d-9f9c351dd457" />
+
 ### Japanese MSX/MSX2/MSX2+/MSX Turbo R Character Data Visualizations
 MSX with no Kanji ROM: Visualization of Yamaha YIS-503 BIOS font
 <img width="4352" height="824" alt="8bitviz" src="https://github.com/user-attachments/assets/4efbf078-4797-47c9-9ad7-ff7351729103" />
