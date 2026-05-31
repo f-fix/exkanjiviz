@@ -119,8 +119,10 @@ There are four characters found both in the Nihongo Word Processor and in the Ka
 <img width="4352" height="816" alt="ac" src="https://github.com/user-attachments/assets/7f020387-06c4-45d6-97d6-615d794d6e58" />
 Visualization of the contents of CGROM2.0's EXKANJI.ROM replacement from https://eighttails.seesaa.net/article/305067428.html
 <img width="4352" height="816" alt="exkanji" src="https://github.com/user-attachments/assets/c489f007-13e9-4efc-9f1e-4fd77c171c23" />
-Visualization of the contents of CGROM2.0's CGROM60.62, CGROM60m.62, and KANJIROM.62 from https://eighttails.seesaa.net/article/305067428.html
+Visualization of the contents of CGROM2.0's CGROM60.62, CGROM60m.62, and KANJIROM.62 from https://eighttails.seesaa.net/article/305067428.html (it has some missing kanji and wrong semigraphics characters, so please consider using a different solution)
 <img width="4352" height="816" alt="cgromkanjiviz" src="https://github.com/user-attachments/assets/a07e12c9-bcef-4a50-911d-9f9c351dd457" />
+The same thing, only using a KANJIROMx.62 converted from EXKANJI.ROM using `exkanji2kanjirom.py` (this time no kanji are missing)
+<img width="4352" height="816" alt="cgromkanjixviz" src="https://github.com/user-attachments/assets/f44e932d-6a4c-4418-a077-e10ccbed325e" />
 
 ### Japanese MSX/MSX2/MSX2+/MSX Turbo R Character Data Visualizations
 MSX with no Kanji ROM: Visualization of Yamaha YIS-503 BIOS font
