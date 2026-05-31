@@ -6,6 +6,8 @@ quick-and-dirty visualizer for font data from:
 - PC-6601-01 Kakuchou Kanji ROM cartridge / 拡張漢字ＲＯＭカートリッジ in `saverkanji` EXKANJI.ROM format
 - PC-8801 series level 1 Kanji ROM `kanji1.rom`
 
+Even without a Kanji ROM, there are 18 specific Kanji available in every Japanese PC-6000 series CGROM at small sizes: `月火水木金土日年円時分秒百千万大中小`
+
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
 2. run `python exkanjiviz.py EXKANJI.ROM exkanji.png`
