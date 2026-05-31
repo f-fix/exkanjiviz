@@ -123,6 +123,8 @@ Visualization of the contents of CGROM2.0's CGROM60.62, CGROM60m.62, and KANJIRO
 <img width="4352" height="816" alt="cgromkanjiviz" src="https://github.com/user-attachments/assets/a07e12c9-bcef-4a50-911d-9f9c351dd457" />
 The same thing, only using a KANJIROMx.62 converted from EXKANJI.ROM using `exkanji2kanjirom.py` (this time no kanji are missing)
 <img width="4352" height="816" alt="cgromkanjixviz" src="https://github.com/user-attachments/assets/f44e932d-6a4c-4418-a077-e10ccbed325e" />
+Visualization of the contents of CGROM version 1.0's CGROM60.60 from https://eighttails.seesaa.net/article/305067428.html with inherent character generation from Mitsubishi M5C6847P-1 VDG
+<img width="4352" height="816" alt="cgromviz" src="https://github.com/user-attachments/assets/69facea1-b49a-4931-a321-772373df1667" />
 
 ### Japanese MSX/MSX2/MSX2+/MSX Turbo R Character Data Visualizations
 MSX with no Kanji ROM: Visualization of Yamaha YIS-503 BIOS font
