@@ -57,7 +57,7 @@ Note: the visualizer expects MSX Kanji ROM data in I/O port order. You can reord
 
 Even without a Kanji ROM, there are 18 specific Kanji available in every Japanese MSX BIOS at 8x8 and (truncated) 6x8 sizes: `月火水木金土日年円時分秒百千万大中小`
 # ... skwkanjiviz
-quick-and-dirty visualizaer for font data from:
+quick-and-dirty visualizer for font data from:
 - Yamaha SKW-01 Kanji Word Processor Unit
 
 ## Usage
