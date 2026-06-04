@@ -56,6 +56,10 @@ quick-and-dirty visualizer for font data from:
 Note: the visualizer expects MSX Kanji ROM data in I/O port order. You can reorder betweeen I/O port order and IC order using `reorder_msx_rom.py`.
 
 Even without a Kanji ROM, there are 18 specific Kanji available in every Japanese MSX BIOS at 8x8 and (truncated) 6x8 sizes: `月火水木金土日年円時分秒百千万大中小`
+# ... skwkanjiviz
+quick-and-dirty visualizaer for font data from:
+- Yamaha SKW-01 Kanji Word Processor Unit
+
 ## Usage
 1. prepare your ROM image (either a real one, or a synthesized one) in `saverkanji` EXKANJI.ROM format
     - if you have `EXTKANJI.ROM` concatenated deinterleaved format, run `python interleave.py -o EXKANJI.ROM EXTKANJI.ROM`
@@ -88,7 +92,7 @@ For visualizing with the PC-6601 Nihongo Word Processor's added character data:
 For visualizing MSX BIOS font and Kanji ROM data:
 1. prepare your ROM images (either real ones or synthesized ones) with kanji ROM in I/O port order
     - You can convert IC order to I/O port order: `python reorder_msx_rom.py --ic ICKANJI.BIN --to=io --io KANJI.ROM`
-2. run it: `python msxbioskanjivis.py BIOS.ROM KANJI.ROM msxbioskanji.png`
+2. run it: `python msxbioskanjiviz.py BIOS.ROM KANJI.ROM msxbioskanji.png`
 3. the created `msxbioskanji.png` will have a visualization of the character data.
 
 For converting MSX Kanji ROM data from IC order to I/O port order:
@@ -104,6 +108,11 @@ or
 ```bash
 python3 -c 'import sys;_,iokanjifn,ickanjifn=sys.argv;iokanji=open(iokanjifn,"rb").read();assert len(iokanji) in {1<<17,1<<18};ickanji=bytes([iokanji[((i & 0b11000000000000000) >> 12) | ((i & 0b111111111111000) << 2) | (i & 0b100000000000000111)] for i in range(len(iokanji))]);open(ickanjifn,"wb").write(ickanji)' KANJI.ROM ICKANJI.BIN
 ```
+
+For visualizing Kanji font ROM data from SKW-01:
+1. prepare your ROM image with SKW-01 Kanji font ROM in group order
+2. run it: `python skwkanjiviz.py FONT.ROM skwkanji.png`
+3. the created `skwkanji.png` will have a visualization of the character data.
 
 ## Visualization
 ### PC-6000 Series Character Data Visualizations
@@ -165,6 +174,30 @@ ROM fingerprint information for each of the separated parts:
 - `64K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan) (PC-6001mkII) [ksaver EXTKANJI format] [IC 2].rom crc32:1764a663 md5:3bd8bf8a43aaf6d44aae5f7dfe77036f sha1:54d082778f64bf4a929e98a3cc310f51e15a8767 sha256:6d91378addf91d9d6e4b520913548a7a80822fb74bc29ae866b3af97337a0bc1 size:65536`
 
 If you need to get the built-in kanji ROM subset (KANJIROM) and/or single-byte character generator ROM (CGROM) from your actual PC-6001mkII or PC-6601, or want to construct an equivalent image for emulation or other purposes, see the [CGROM/KANJIROMファイルについて section of the PC-6001mkII/6601用互換BASIC website](https://000.la.coocan.jp/p6/basic66.html#cgrom). I used isio's [saver](http://retropc.net/isio/mysoft/#saver) to do this for my PC-6001mkII.
+
+You can extract the Kanji font ROM data from an MSX in I/O port order like this:
+```basic
+100 defint a-z
+110 for jis=1 to 2:p1=&HD8+2*(jis-1):p2=p1+1
+120 f$="JISKAN"+chr$(jis+&h30)+".BIN":?f$":";
+130 open f$ as #1 len=32
+140 field #1, 32 as g$
+150 for k=0 to 63
+160 out p2,k
+170 for t=0 to 63
+180 out p1,t
+190 for i=0 to 31
+200 mid$(g$,i+1,1)=chr$(inp(p2))
+210 next i
+220 put #1,k*64+t+1
+230 next t
+240 ?".";
+250 next k
+260 close#1
+270 ?
+280 next jis
+290 end
+```
 ## Photos of N60 PC-6007SR Kakuchou Kanji ROM/RAM Cartridge
 <img width="40%" alt="Front - [N60] 128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan)" src="https://github.com/user-attachments/assets/410fa46d-4063-4328-91a1-74a89bf85569" /><img width="40%" alt="Back - [N60] 128K PC-6007SR Kakuchou Kanji ROM & RAM Cartridge (NEC) (Japan)" src="https://github.com/user-attachments/assets/29aa6621-edea-44e7-a241-475a20d6fa3f" />
 <img width="30%" alt="Interior View 1 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/5820b11b-4dc7-483e-80bc-61b550034469" /><img width="30%" alt="Interior View 2 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/e227bb76-232d-4a1b-ac05-1425b3f3782b" /><img width="30%" alt="Interior View 3 -  N60  PC-6007SR Kakuchou Kanji ROM   RAM Cartridge (NEC) (Japan) (PC-6001mkII)" src="https://github.com/user-attachments/assets/1a8392a2-d499-4341-8038-c2ec94f45d4e" />
