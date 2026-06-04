@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
                 }
                 putchar('.');
             }
-            if (fclose(ofn)) {
+            if (fclose(f)) {
                 perror(ofn);
                 exit(1);
             }
