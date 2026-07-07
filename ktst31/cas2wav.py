@@ -19,7 +19,7 @@ The code provided in this file is entirely public domain, meaning you are legall
 
 """
 
-import math, wave, struct, sys
+import math, os, struct, sys, wave
 
 CAS_HEADER_MARKER = b"\x1f\xa6\xde\xba\xcc\x13\x7d\x74"
 SAMPLE_RATE = 22050
@@ -74,7 +74,13 @@ def generate_pilot_leader(duration_seconds):
 
 
 def cas_to_wav(cas_filename, wav_filename):
-    with open(cas_filename, "rb") as f:
+    # this is a general purpose data converter. the extension
+    # validation by assertion is reasonable, but dictating other
+    # aspects of the input and output paths would not be, so we
+    # suppress sonarqube validation/taint analysis
+    assert os.path.splitext(cas_filename)[-1].lower() == ".cas"
+    assert os.path.splitext(wav_filename)[-1].lower() == ".wav"
+    with open(cas_filename, "rb") as f:  # NOSONAR
         cas_data = f.read()
     pcm_frames = []
     idx = 0
@@ -92,7 +98,7 @@ def cas_to_wav(cas_filename, wav_filename):
             pcm_frames.extend(encode_byte(cas_data[idx]))
             idx += 1
     pcm_frames.extend(generate_silence(FINAL_SILENCE_DURATION))
-    with wave.open(wav_filename, "wb") as wav_file:
+    with wave.open(wav_filename, "wb") as wav_file:  # NOSONAR
         wav_file.setnchannels(1)
         wav_file.setsampwidth(2)
         wav_file.setframerate(SAMPLE_RATE)
@@ -101,7 +107,11 @@ def cas_to_wav(cas_filename, wav_filename):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if (
+        len(sys.argv) != 3
+        or os.path.splitext(sys.argv[1])[-1].lower() != ".cas"
+        or os.path.splitext(sys.argv[2])[-1].lower() != ".wav"
+    ):
         print("Usage: python cas2wav.py <input.cas> <output.wav>")
     else:
         cas_to_wav(sys.argv[1], sys.argv[2])

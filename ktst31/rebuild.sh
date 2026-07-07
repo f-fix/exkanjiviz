@@ -1,4 +1,6 @@
 #!/bin/bash --
+cd "$( dirname -- "$0" || echo . )" &&
+printf 'working in directory %q\n' "$( pwd )" &&
 echo checking for source files &&
     ls -d BACONLDR.BIN autoexec.bas cktst31.bcl cktst31.asc ktst31{,a,b,c}.asc ktst31.md rebuild.sh cas2wav.py &&
     echo checking for needed tools &&
