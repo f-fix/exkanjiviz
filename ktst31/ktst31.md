@@ -35,7 +35,7 @@ These test screens exercise JIS Level 1 kanji access, JIS level 2 kanji access, 
 
 1. Level 1+Level 2 kanji ROM, level 2 determined via read: (like Sony HB-F1XV)
 ```
- Kanji I/O Tests 1/9: Kanji Detection v3.1 
+ Kanji I/O Tests 1/9: Kanji Detection v3.1
 BIOS:月火水木金土日年円時分秒百千万大中小 ひらがな ｶﾀｶﾅ
          　　　　　　　　　　　　　　　　　　 Romaji ♦♣♥♠
 Lv1 漢字：月火水木金土日年円時分
@@ -46,12 +46,12 @@ Lv1 漢字：月火水木金土日年円時分
 Lv2 漢字：尸囗尸匚囗厂冂🐐🦋🌺🪐
 嗅囑啣漾聒僥僉嗟喇嗷喞嘔啻嘛嗄僮
 Lv1/Lv2:●劒　　ｃ匚ｏ卅ο凵κ冂
-Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎… 
+Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
        （Previous test）　⇨　 ★劒
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 2/9: Interleaving A  v3.1 
+ Kanji I/O Tests 2/9: Interleaving A  v3.1
 ｃ匚ｏ卅ο凵κ冂ｃ匚ｏ卅ο凵κ冂
 ｃ匚ｏ卅ο凵κ冂ｃ匚ｏ卅ο凵κ冂
 Ⅸ匚㎡卅＝凵…冂ｃ噬ｏ囂ο嶇κ嵎
@@ -63,10 +63,10 @@ Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 3/9: Interleaving B  v3.1 
+ Kanji I/O Tests 3/9: Interleaving B  v3.1
 ｃ噬ｏ囂ο嶇κ嵎Ⅸ匚㎡卅＝凵…冂
 ｃ噬ｏ囂ο嶇κ嵎Ⅸ匚㎡卅＝凵…冂
 ｃ噬ｏ囂ο嶇κ嵎Ⅸ匚㎡卅＝凵…冂
@@ -78,7 +78,7 @@ Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
 
 
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```xml
       <io base="0xD8" num="2" type="O"/>
@@ -89,7 +89,7 @@ Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
 ```
 2. Only Level 1 kanji ROM, but exposed equivalently on Level 1+Level 2 I/O ports: (like Yamaha YIS-805/256)
 ```
- Kanji I/O Tests 1/9: Kanji Detection v3.1 
+ Kanji I/O Tests 1/9: Kanji Detection v3.1
 BIOS:月火水木金土日年円時分秒百千万大中小 ひらがな ｶﾀｶﾅ
          　　　　　　　　　　　　　　　　　　 Romaji ♦♣♥♠
 Lv1 漢字：月火水木金土日年円時分
@@ -100,12 +100,12 @@ Lv1 漢字：月火水木金土日年円時分
 Lv2 漢字：　ｘ　Ⅸｘ㌘…裕湧由猶
 Ｌｖ２漢字：　ＭＩＳＤＲＡＷＮ！
 Lv1/Lv2:●★　　ｃⅨｏ㎡ο＝κ…
-Lv2↔Lv1:●★　　ｃⅨｏ㎡ο＝κ… 
+Lv2↔Lv1:●★　　ｃⅨｏ㎡ο＝κ…
        （Previous test）　⇨　 ★★
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 2/9: Interleaving A  v3.1 
+ Kanji I/O Tests 2/9: Interleaving A  v3.1
 ｃⅨｏ㎡ο＝κ…ｃⅨｏ㎡ο＝κ…
 ｃⅨｏ㎡ο＝κ…ｃⅨｏ㎡ο＝κ…
 ⅨⅨ㎡㎡＝＝……ｃｃｏｏοοκκ
@@ -117,10 +117,10 @@ Lv2↔Lv1:●★　　ｃⅨｏ㎡ο＝κ…
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 3/9: Interleaving B  v3.1 
+ Kanji I/O Tests 3/9: Interleaving B  v3.1
 ｃｃｏｏοοκκⅨⅨ㎡㎡＝＝……
 ｃｃｏｏοοκκⅨⅨ㎡㎡＝＝……
 ｃｃｏｏοοκκⅨⅨ㎡㎡＝＝……
@@ -132,7 +132,7 @@ Lv2↔Lv1:●★　　ｃⅨｏ㎡ο＝κ…
 
 
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```xml
       <io base="0xD8" num="2" type="O"/>
@@ -143,7 +143,7 @@ Lv2↔Lv1:●★　　ｃⅨｏ㎡ο＝κ…
 ```
 3. Only level 1 kanji, no side-effects from attempting to access level 2 I/O ports: (like Panasonic FS-A1FX)
 ```
- Kanji I/O Tests 1/9: Kanji Detection v3.1 
+ Kanji I/O Tests 1/9: Kanji Detection v3.1
 BIOS:月火水木金土日年円時分秒百千万大中小 ひらがな ｶﾀｶﾅ
          　　　　　　　　　　　　　　　　　　 Romaji ♦♣♥♠
 Lv1 漢字：月火水木金土日年円時分
@@ -154,12 +154,12 @@ Lv1 漢字：月火水木金土日年円時分
 Lv2 漢字：███████████
 ████████████████
 Lv1/Lv2:●█　　ｃ█ｏ█ο█κ█
-Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█… 
+Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█…
        （Previous test）　⇨　 ●█
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 2/9: Interleaving A  v3.1 
+ Kanji I/O Tests 2/9: Interleaving A  v3.1
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
@@ -171,10 +171,10 @@ Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█…
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 3/9: Interleaving B  v3.1 
+ Kanji I/O Tests 3/9: Interleaving B  v3.1
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
@@ -186,7 +186,7 @@ Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█…
 
 
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```xml
       <io base="0xD8" num="2" type="O"/>
@@ -195,7 +195,7 @@ Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█…
 ```
 4. Level 1+Level 2 kanji ROM, level 2 determined via write: (like Panasonic FS-A1GT)
 ```
- Kanji I/O Tests 1/9: Kanji Detection v3.1 
+ Kanji I/O Tests 1/9: Kanji Detection v3.1
 BIOS:月火水木金土日年円時分秒百千万大中小 ひらがな ｶﾀｶﾅ
          　　　　　　　　　　　　　　　　　　 Romaji ♦♣♥♠
 Lv1 漢字：月火水木金土日年円時分
@@ -206,12 +206,12 @@ Lv1 漢字：月火水木金土日年円時分
 Lv2 漢字：尸囗尸匚囗厂冂🐐🦋🌺🪐
 嗅囑啣漾聒僥僉嗟喇嗷喞嘔啻嘛嗄僮
 Lv1/Lv2:●劒　　ｃ匚ｏ卅ο凵κ冂
-Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎… 
+Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
        （Previous test）　⇨　 劒劒
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 2/9: Interleaving A  v3.1 
+ Kanji I/O Tests 2/9: Interleaving A  v3.1
 ｃ匚ｏ卅ο凵κ冂ｃ匚ｏ卅ο凵κ冂
 ｃ匚ｏ卅ο凵κ冂ｃ匚ｏ卅ο凵κ冂
 匚匚卅卅凵凵冂冂ｃｃｏｏοοκκ
@@ -223,10 +223,10 @@ Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 3/9: Interleaving B  v3.1 
+ Kanji I/O Tests 3/9: Interleaving B  v3.1
 ｃｃｏｏοοκκ匚匚卅卅凵凵冂冂
 ｃｃｏｏοοκκ匚匚卅卅凵凵冂冂
 ｃｃｏｏοοκκ匚匚卅卅凵凵冂冂
@@ -238,7 +238,7 @@ Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
 
 
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```xml
       <io base="0xD8" num="2" type="O"/>
@@ -249,7 +249,7 @@ Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
 ```
 5. Only level 1 kanji, but Level 2 I/O ports also active and with level interlock between writes and subsequent reads; reads from the "other" port than the pair that was last written don't disturb the counter: (like Sanyo PHC-35J)
 ```
- Kanji I/O Tests 1/9: Kanji Detection v3.1 
+ Kanji I/O Tests 1/9: Kanji Detection v3.1
 BIOS:月火水木金土日年円時分秒百千万大中小 ひらがな ｶﾀｶﾅ
          　　　　　　　　　　　　　　　　　　 Romaji ♦♣♥♠
 Lv1 漢字：月火水木金土日年円時分
@@ -260,12 +260,12 @@ Lv1 漢字：月火水木金土日年円時分
 Lv2 漢字：███████████
 ████████████████
 Lv1/Lv2:●█　　ｃ█ｏ█ο█κ█
-Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█… 
+Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█…
        （Previous test）　⇨　 ██
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 2/9: Interleaving A  v3.1 
+ Kanji I/O Tests 2/9: Interleaving A  v3.1
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
 ｃ█ｏ█ο█κ█ｃ█ｏ█ο█κ█
 ████████ｃ█ｏ█ο█κ█
@@ -277,10 +277,10 @@ Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█…
 ｃ█ｏ█ο█κ█████████
 ｃ█ｏ█ο█κ█████████
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 3/9: Interleaving B  v3.1 
+ Kanji I/O Tests 3/9: Interleaving B  v3.1
 ｃ█ｏ█ο█κ█████████
 ｃ█ｏ█ο█κ█████████
 ｃ█ｏ█ο█κ█████████
@@ -292,7 +292,7 @@ Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█…
 
 
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```xml
       <io base="0xD8" num="2" type="O"/>
@@ -303,7 +303,7 @@ Lv2↔Lv1:█★　　█Ⅸ█㎡█＝█…
 ```
 6. Level 1+Level 2 kanji ROM, with level interlock between writes and subsequent reads; reads from the "other" port than the pair that was last written don't disturb the counter: (like Sanyo PHC-70FD2)
 ```
- Kanji I/O Tests 1/9: Kanji Detection v3.1 
+ Kanji I/O Tests 1/9: Kanji Detection v3.1
 BIOS:月火水木金土日年円時分秒百千万大中小 ひらがな ｶﾀｶﾅ
          　　　　　　　　　　　　　　　　　　 Romaji ♦♣♥♠
 Lv1 漢字：月火水木金土日年円時分
@@ -314,12 +314,12 @@ Lv1 漢字：月火水木金土日年円時分
 Lv2 漢字：尸囗尸匚囗厂冂🐐🦋🌺🪐
 嗅囑啣漾聒僥僉嗟喇嗷喞嘔啻嘛嗄僮
 Lv1/Lv2:●劒　　ｃ匚ｏ卅ο凵κ冂
-Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎… 
+Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
        （Previous test）　⇨　 █劒
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 2/9: Interleaving A  v3.1 
+ Kanji I/O Tests 2/9: Interleaving A  v3.1
 ｃ匚ｏ卅ο凵κ冂ｃ匚ｏ卅ο凵κ冂
 ｃ匚ｏ卅ο凵κ冂ｃ匚ｏ卅ο凵κ冂
 █匚█卅█凵█冂ｃ█ｏ█ο█κ█
@@ -331,10 +331,10 @@ Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
 ｃ█ｏ█ο█κ██匚█卅█凵█冂
 ｃ█ｏ█ο█κ██匚█卅█凵█冂
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 3/9: Interleaving B  v3.1 
+ Kanji I/O Tests 3/9: Interleaving B  v3.1
 ｃ█ｏ█ο█κ██匚█卅█凵█冂
 ｃ█ｏ█ο█κ██匚█卅█凵█冂
 ｃ█ｏ█ο█κ██匚█卅█凵█冂
@@ -346,7 +346,7 @@ Lv2↔Lv1:劈★　　噬Ⅸ囂㎡嶇＝嵎…
 
 
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```xml
       <io base="0xD8" num="2" type="O"/>
@@ -364,15 +364,15 @@ If you have a Daewoo CPC-400/400S / X-2/s, it is expected that the test screens 
 Test screen 4 repeats the non-BIOS part of test screen 1 from part A, except that it tries different bit combinations in the normally-ignored upper bits of the character address parts. Test screen 5 repeats test screen 4, but tries to read back the data using the other readback port which is likely to return 0xFF. Test screen 6 repeats test screen 5, but alternates between the normal (odd) and unexpected (even) readback ports on each scanline.
 
 ```
- Kanji I/O Tests 4/9: Upper Bit Flips v3.1 
+ Kanji I/O Tests 4/9: Upper Bit Flips v3.1
 ```
 *(refer to non-BIOS part of test screen 1 in part A for expected patterns)*
 ```
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 5/9: Lower Readbacks v3.1 
+ Kanji I/O Tests 5/9: Lower Readbacks v3.1
 ████████████████
 ████████████████
 ████████████████
@@ -384,10 +384,10 @@ Test screen 4 repeats the non-BIOS part of test screen 1 from part A, except tha
 ████████████████
 ██████████████
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Kanji I/O Tests 6/9: Read Port Flips v3.1  
+ Kanji I/O Tests 6/9: Read Port Flips v3.1
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
@@ -399,7 +399,7 @@ Test screen 4 repeats the non-BIOS part of test screen 1 from part A, except tha
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 
 ### Part C: Hanja I/O Tests (new tests for Daewoo CPC-400/CPC-400S Hanja/Hangul ROM)
@@ -412,7 +412,7 @@ This test exercises the I/O port Hangul/Hanja ROM of the Daewoo CPC-400/CPC-400S
 
 Expected appearance:
 ```
- Hanja I/O Tests 7/9: Hanja Detection v3.1 
+ Hanja I/O Tests 7/9: Hanja Detection v3.1
 BIOS: 한글 자모              ㅎㅏㄴㄱㅡㄹ ㅈㅏㅁㅗ
                     "English/Romaja" ♦♣♥♠
 Daewoo CPC-400 X-II Hangul/Hanja
@@ -425,10 +425,10 @@ Daewoo CPC-400 X-II Hangul/Hanja
 일본어(日本語):ひらがな カタカナ
 Ｆｒｏｍ　ｕｐｐｅｒ　１２８Ｋ：
 版荷兌浸豊何浸販罷篇鬪片退評八針
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Hanja I/O Tests 8/9: Upper Bit Flips v3.1 
+ Hanja I/O Tests 8/9: Upper Bit Flips v3.1
 Daewoo CPC-400 X-II Hangul/Hanja
 대우 Ⅹ-Ⅱ/s 한글과 한자(漢字):
 😊︎ 바보라도 열흘 안에 한글을
@@ -441,10 +441,10 @@ Daewoo CPC-400 X-II Hangul/Hanja
 版荷兌浸豊何浸販罷篇鬪片退評八針
 
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```
- Hanja I/O Tests 9/9: Port Rotations  v3.1 
+ Hanja I/O Tests 9/9: Port Rotations  v3.1
 Daewoo CPC-400 X-II Hangul/Hanja
 대█ █-█/s ███ ██(██):
 █ █보██ 열█ █에 ██을 █
@@ -457,7 +457,7 @@ Daewoo CPC-400 X-II Hangul/Hanja
 █荷███何███篇███評██
 
 
- Please share screen pic+model│press a key 
+ Please share screen pic+model│press a key
 ```
 ```xml
       <type>hangul</type>
