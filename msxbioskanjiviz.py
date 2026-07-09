@@ -412,6 +412,15 @@ def msxbioskanjiviz(bios, kanji_roms, bioskanji_png):
     k = b""
     if kanji_roms:
         k = b"".join([open(kanji_rom, "rb").read() for kanji_rom in kanji_roms])
+        assert len(k) in {128 * 1024, 256 * 1024}
+        # See https://x.com/bugnaga/status/1698203551204524062 for info on how MSX BIOS decides whether a kanji ROM works
+        assert k[0x80 * 32 : 8 + 0x80 * 32] == bytes(
+            [(0x80 >> i) & 0x7F for i in range(8)]
+        )  # MSX Level 1 kanji validity check
+        if len(k) == 256 * 1024:
+            assert (
+                sum(i for i in k[0x1D7E * 32 : 8 + 0x1D7E * 32]) & 0xFF == 0x95
+            )  # MSX Level 2 kanji validity check
         k = shuffle_kanji(k)
         b = (
             b[: 256 * 32]
